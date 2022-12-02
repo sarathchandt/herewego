@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Untree.co">
+	<link rel="shortcut icon" href="favicon.png">
+
+	<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js">
+        swal("Hello world!");
+    </script> -->
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+	<meta name="description" content="" />
+	<meta name="keywords" content="bootstrap, bootstrap4" />
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Source+Serif+Pro:wght@400;700&display=swap"
+		rel="stylesheet">
+
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+	<link rel="stylesheet" href="../stylesheetA/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../stylesheetA/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../stylesheetA/css/owl.theme.default.min.css">
+	<link rel="stylesheet" href="../stylesheetA/css/jquery.fancybox.min.css">
+	<link rel="stylesheet" href="../stylesheetA/fonts/icomoon/style.css">
+	<link rel="stylesheet" href="../stylesheetA/fonts/flaticon/font/flaticon.css">
+	<link rel="stylesheet" href="../stylesheetA/css/daterangepicker.css">
+	<link rel="stylesheet" href="../stylesheetA/css/aos.css">
+	<link rel="stylesheet" href="../stylesheetA/css/style.css">
+
+	<title></title>
+</head>
+
+<body>
+
+
+	<div class="site-mobile-menu site-navbar-target">
+		<div class="site-mobile-menu-header">
+			<div class="site-mobile-menu-close">
+				<span class="icofont-close js-menu-toggle"></span>
+			</div>
+		</div>
+		<div class="site-mobile-menu-body"></div>
+	</div>
+
+	<nav class="site-nav">
+
+		<div class="container">
+			<div class="site-navigation">
+				<!-- <a href="index.html" class="logo m-0">HERE WE GO <span class="text-primary">.</span></a> -->
+				<span class=" ">
+
+					<img src="..\images\users\here we go-logos_white.png" class="img-fluid"
+						style="height:4rem; margin-left: -108px;" alt="Sample image">
+
+				</span>
+
+				<ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right">
+					<li class="active"><a href="index.html">Home</a></li>
+
+					<!-- <li> <a href="/otp">essage</a></li> -->
+					<li> <a href="/profile">Profile</a></li>
+					<li> <a href="/logout">Logout</a></li>
+
+					<li><a href="/favorite">Favorites</a></li>
+				</ul>
+
+				<a href="#"
+					class="burger ml-auto float-right site-menu-toggle js-menu-toggle d-inline-block d-lg-none light"
+					data-toggle="collapse" data-target="#main-navbar">
+					<span></span>
+				</a>
+
+			</div>
+		</div>
+
+	</nav>
+
+
+	<div class="hero text-white">
+
+
+
+
+
+		<div class="container-fluid">
+
+			<div class="row">
+				<div class="col-12 text-center">
+					<!-- <h2 class="text-white">
+						<%= hotel.name.toUpperCase() %>
+					</h2> -->
+
+
+					<img src="../images/product/<%= hotel.imageUrl %> " class="rounded" style="width: 80%;height:25rem;"
+						alt="haai">
+				</div>
+			</div>
+
+
+
+
+		</div>
+
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-8 mt-3 ">
+				<div class="text-center">
+					<h2><b>
+							<%= hotel.name.toUpperCase() %>
+						</b></h2>
+					<p>
+						<%= hotel.description %>
+					</p>
+
+					<div class="d-inline  ">
+						<span class="material-symbols-outlined d-inline">
+
+							night_shelter
+						</span>
+
+						<h6 class="d-inline bed">BEDROOMS : <%= hotel.bed %>
+						</h6>
+					</div>
+					<div class="d-inline  ">
+						<span class="material-symbols-outlined">
+							bathtub
+						</span>
+
+						<h6 class="d-inline bath"> BATHROOMS : <%= hotel.bath %>
+						</h6>
+					</div>
+
+					<hr style="color:#1a374d;">
+				</div>
+				<br>
+				<div class="text-left pl-5">
+					<h4>What this place offers</h4><br>
+
+
+
+
+					<div class="row pl-5 text-left">
+
+						<% if(hotel.kitchen){ %>
+							<div class="col-sm-6">
+								<span class="material-symbols-outlined">
+									task_alt
+								</span>
+								<label for="" class="kit">Kitchen</label>
+							</div>
+							<% }else{ %>
+								<div class="col-sm-6">
+									<span class="material-symbols-outlined">
+										cancel
+									</span>
+									<label for="" class="kit">Kitchen</label>
+								</div>
+								<% } %>
+
+
+									<% if(hotel.car){ %>
+										<div class="col-sm-6">
+											<span class="material-symbols-outlined">
+												task_alt
+											</span>
+											<label for="" class="kit">Free Parking</label>
+										</div>
+										<% }else{ %>
+											<div class="col-sm-6">
+												<span class="material-symbols-outlined">
+													cancel
+												</span>
+												<label for="" class="kit">Free Parking</label>
+											</div>
+											<% } %>
+
+												<% if(hotel.dry){ %>
+													<div class="col-sm-6">
+														<span class="material-symbols-outlined">
+															task_alt
+														</span>
+														<label for="" class="kit">Dryer</label>
+													</div>
+													<% }else{ %>
+														<div class="col-sm-6">
+															<span class="material-symbols-outlined">
+																cancel
+															</span>
+															<label for="" class="kit">Dryer</label>
+														</div>
+														<% } %>
+
+
+
+															<% if(hotel.balcony){ %>
+																<div class="col-sm-6">
+																	<span class="material-symbols-outlined">
+																		task_alt
+																	</span>
+																	<label for="" class="kit">Balcony</label>
+																</div>
+																<% }else{ %>
+																	<div class="col-sm-6">
+																		<span class="material-symbols-outlined">
+																			cancel
+																		</span>
+																		<label for="" class="kit">Balcony</label>
+																	</div>
+																	<% } %>
+
+
+
+																		<% if(hotel.wifi){ %>
+																			<div class="col-sm-6">
+																				<span class="material-symbols-outlined">
+																					task_alt
+																				</span>
+																				<label for="" class="kit">Wifi</label>
+																			</div>
+																			<% }else{ %>
+																				<div class="col-sm-6">
+																					<span
+																						class="material-symbols-outlined">
+																						cancel
+																					</span>
+																					<label for=""
+																						class="kit">Wifi</label>
+																				</div>
+																				<% } %>
+
+																					<% if(hotel.wm){ %>
+																						<div class="col-sm-6">
+																							<span
+																								class="material-symbols-outlined">
+																								task_alt
+																							</span>
+																							<label for=""
+																								class="kit">Washing
+																								machine</label>
+																						</div>
+																						<% }else{ %>
+																							<div class="col-sm-6">
+																								<span
+																									class="material-symbols-outlined">
+																									cancel
+																								</span>
+																								<label for=""
+																									class="kit">Washing
+																									machine</label>
+																							</div>
+																							<% } %>
+
+																								<% if(hotel.ac){ %>
+																									<div
+																										class="col-sm-6">
+																										<span
+																											class="material-symbols-outlined">
+																											task_alt
+																										</span>
+																										<label for=""
+																											class="kit">Air
+																											Conditioner</label>
+																									</div>
+																									<% }else{ %>
+																										<div
+																											class="col-sm-6">
+																											<span
+																												class="material-symbols-outlined">
+																												cancel
+																											</span>
+																											<label
+																												for=""
+																												class="kit">Air
+																												Conditioner</label>
+																										</div>
+																										<% } %>
+
+
+																											<% if(hotel.garden){
+																												%>
+																												<div
+																													class="col-sm-6">
+																													<span
+																														class="material-symbols-outlined">
+																														task_alt
+																													</span>
+																													<label
+																														for=""
+																														class="kit">Garden</label>
+																												</div>
+																												<% }else{
+																													%>
+																													<div
+																														class="col-sm-6">
+																														<span
+																															class="material-symbols-outlined">
+																															cancel
+																														</span>
+																														<label
+																															for=""
+																															class="kit">Garden</label>
+																													</div>
+																													<% }
+																														%>
+
+
+
+
+
+					</div>
+				</div>
+				<hr>
+
+				<div class="pl-5">
+					<h4 class="mb-5">Drop your thoughts about us</h4>
+
+
+					<form action="/coment/<%= hotel._id %>" method="post" class="text-center">
+						<div class="row">
+							<div class="col-md-6">
+								<label for="starrating">Add star rating</label>
+								<input type="number" id="rtng" name="starrating" min="1" max="5" required>
+
+							</div>
+							<div class="col-md-6">
+								<label for="coment">Share it</label>
+								<input type="text" name="coment" required><br>
+								<div class="row">
+									<div class="col-12 text-right">
+										<button type="submit" class="btn text-white mr-5"
+											style="background-color: #1a374d;">Post</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</form>
+
+					<h4 class="mt-5"> Top coments</h4>
+					<% if(states.length==0){ %>
+
+						<p class="text-center pt-5">No coment yet...</p>
+						<% }else{ %>
+							<div class="row">
+								<% for(let com of coment){ %>
+									<div class="col-md-6 mt-2">
+										<h5 class="d-inline mr-4">
+											<%= com.user %>
+										</h5>
+										<div class="d-inline" style="position: relative;left:-13px;top:5px;">
+											<% for(let x=1;x<=com.starrating;x++ ){ %>
+												<span class="material-symbols-outlined"
+													style="color: gold;margin-left: -5px;">
+													stars
+												</span>
+												<% } %>
+										</div>
+										<p>
+											<%= com.coment %>
+										</p>
+									</div>
+									<% } %>
+							</div>
+
+							<% } %>
+				</div>
+
+
+
+
+
+			</div>
+
+			<div class="col-md-4 mt-3 " id="fixedprice">
+				<div class="card" style="width: 18rem;" id="fixedprice">
+					<div class="card-body" id="fixedprice">
+						<h5 class="card-title d-inline" id="fixedpric">₹ <b style="color:#1a374d ;" id="fixedpric">
+								<%= hotel.price.toLocaleString() %>
+							</b> </h5>
+						<p class="d-inline " id="fixedpric"> per night </p>
+
+						<span class="material-symbols-outlined d-inline "
+							style="color: goldenrod;position: relative;top: 4px;left: 23px;">
+							stars
+						</span>
+						<% let k=Number.isNaN(states.rate) %>
+							<% if(!k){ %>
+								<h6 class="d-inline ">
+									<%= Math.floor(states.rate) %>.0
+								</h6>
+								<% } %>
+									<% if(states.length==0){ %>
+										<h6 class="d-inline text-black">0.0</h6>
+										<% } %>
+											<hr>
+											<h6 class="card-subtitle mb-2 text-muted" id="fixedprice"></h6>
+
+											<!-- form for payment -->
+
+											<form action="/paymenthere/<%= hotel._id %>" method="post" id="fixedprice">
+												<label for="fromdate">Check-in Date</label><br>
+
+												<input type="date" id="fromdate" style="width:100%;" name="fromdate"
+													required><br><br>
+												<label for="todate">Check-out Date</label><br>
+
+												<input type="date" style="width:100%;" id="todate" name="todate"
+													required><br><br>
+												<label for="adult">Select Adults </label><br>
+
+												<select name="adult" style="width:100%;" id="adult" onclick="date()"
+													required>
+													<option value="1">0</option>
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+
+													<option value="5">5</option>
+												</select><br><br>
+												<p class="text-danger" id="inst" style="display:none;">You have choosed
+													Wrong date....!</p>
+
+												<button type="submit" class="btn text-white " disabled id="btn1"
+													style="background-color: #1a374d;display: block;">Reserve</button>
+
+												<button type="submit" class="btn text-white " id="btn2"
+													style="background-color: #1a374d;display:none;">Reserve</button>
+
+
+											</form>
+
+											<!-- end of the form -->
+
+
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+
+	</div>	</div>
+
+
+
+
+
+	<div class="site-footer">
+		<div class="inner first">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 col-lg-4">
+						<div class="widget">
+							<h3 class="heading">About Tour</h3>
+							<p>Far far away, behind the word mountains, far from the countries Vokalia and
+								Consonantia, there live the blind texts.</p>
+						</div>
+						<div class="widget">
+							<ul class="list-unstyled social">
+								<li><a href="#"><span class="icon-twitter"></span></a></li>
+								<li><a href="#"><span class="icon-instagram"></span></a></li>
+								<li><a href="#"><span class="icon-facebook"></span></a></li>
+								<li><a href="#"><span class="icon-linkedin"></span></a></li>
+								<li><a href="#"><span class="icon-dribbble"></span></a></li>
+								<li><a href="#"><span class="icon-pinterest"></span></a></li>
+								<li><a href="#"><span class="icon-apple"></span></a></li>
+								<li><a href="#"><span class="icon-google"></span></a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-2 pl-lg-5">
+						<div class="widget">
+							<h3 class="heading">Pages</h3>
+							<ul class="links list-unstyled">
+								<li><a href="#">Blog</a></li>
+								<li><a href="#">About</a></li>
+								<li><a href="#">Contact</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-2">
+						<div class="widget">
+							<h3 class="heading">Resources</h3>
+							<ul class="links list-unstyled">
+								<li><a href="#">Blog</a></li>
+								<li><a href="#">About</a></li>
+								<li><a href="#">Contact</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-6 col-lg-4">
+						<div class="widget">
+							<h3 class="heading">Contact</h3>
+							<ul class="list-unstyled quick-info links">
+								<li class="email"><a href="#">mail@example.com</a></li>
+								<li class="phone"><a href="#">+1 222 212 3819</a></li>
+								<li class="address"><a href="#">43 Raymouth Rd. Baltemoer, London 3910</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="inner dark">
+			<div class="container">
+				<div class="row text-center">
+					<div class="col-md-8 mb-3 mb-md-0 mx-auto">
+						<p>Copyright &copy;
+							<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash;
+							Designed with love by <a href="https://untree.co" class="link-highlight">Untree.co</a>
+							<!-- License information: https://untree.co/license/ -->Distributed By <a
+								href="https://themewagon.com" target="_blank">ThemeWagon</a>
+						</p>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div id="overlayer"></div>
+	<div class="loader">
+		<div class="spinner-border" role="status">
+			<span class="sr-only">Loading...</span>
+		</div>
+	</div>
+
+	<script src="../stylesheetA/js/jquery-3.4.1.min.js"></script>
+	<script src="../stylesheetA/js/popper.min.js"></script>
+	<script src="../stylesheetA/js/bootstrap.min.js"></script>
+	<script src="../stylesheetA/js/owl.carousel.min.js"></script>
+	<script src="../stylesheetA/js/jquery.animateNumber.min.js"></script>
+	<script src="../stylesheetA/js/jquery.waypoints.min.js"></script>
+	<script src="../stylesheetA/js/jquery.fancybox.min.js"></script>
+	<script src="../stylesheetA/js/aos.js"></script>
+	<script src="../stylesheetA/js/moment.min.js"></script>
+	<script src="../stylesheetA/js/daterangepicker.js"></script>
+	<script src="sweetalert2.all.min.js">
+	</script>
+
+	<script>
+		function date() {
+
+			let from = document.querySelector("#fromdate").value;
+			let to = document.querySelector("#todate").value;
+			if (from < to) {
+
+				document.querySelector('#btn1').style.display = 'none';
+				document.querySelector('#btn2').style.display = 'block';
+				document.querySelector("#inst").style.display = 'none';
+			} else {
+
+				document.querySelector('#btn1').style.display = 'block';
+				document.querySelector('#btn2').style.display = 'none';
+				document.querySelector("#inst").style.display = 'block';
+
+			}
+
+
+		}
+	</script>
+
+
+	<script>
+
+	</script>
+	<script src="/public/stylesheetA/js/swal.js"></script>
+
+	<script src="../stylesheetA/js/typed.js"></script>
+	<script>
+
+		$(function () {
+			var slides = $('.slides'),
+				images = slides.find('img');
+
+			images.each(function (i) {
+				$(this).attr('data-id', i + 1);
+			})
+
+			var typed = new Typed('.typed-words', {
+				strings: ["San Francisco.", " Paris.", " New Zealand.", " Maui.", " London."],
+				typeSpeed: 80,
+				backSpeed: 80,
+				backDelay: 4000,
+				startDelay: 1000,
+				loop: true,
+				showCursor: true,
+				preStringTyped: (arrayPos, self) => {
+					arrayPos++;
+					console.log(arrayPos);
+					$('.slides img').removeClass('active');
+					$('.slides img[data-id="' + arrayPos + '"]').addClass('active');
+				}
+
+			});
+		})
+	</script>
+
+	<script src="../stylesheetA/js/custom.js"></script>
+	<script src="sweetalert2.all.min.js"></script>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<!-- <script>
+			function foo(){
+				
+				Swal.fire({
+  					title: 'Error!',
+  					text: 'Do you want to continue',
+  				     icon: 'error',
+ 				 	confirmButtonText: 'Cool'
+})
+			}
+		</script> -->
+
+
+</body>
+
+</html>
