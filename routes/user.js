@@ -112,14 +112,28 @@ router.get("/user", (req, res) => {
                         }
                     }
 
-                    for (let x = 0; x < 3; x++) {
-                        // if(!hotel[x].isfav){
-                        //     hotel[x].isfav=false
-                        // }
-                    }
+                    // for (let x = 0; x < 3; x++) {
+                    //     // if(!hotel[x].isfav){
+                    //     //     hotel[x].isfav=false
+                    //     // }
+                    // }
+
+                    usersntrl.takerentalitmsimg().then((rental) => {
+                        let rentals = [];
+                        if (rental.length > 8) {
+                            for (let i = 0; i < 8; i++) {
+                                rentals.push(rental[i]);
+                            }
+                        } else {
+                            for (let i = 0; i < rental.length; i++) {
+                                rentals.push(rental[i]);
+                            }
+                        }
+
+                        res.render("user", { hotel, baner, fav, rentals })
+                    })
 
 
-                    res.render("user", { hotel, baner, fav })
                 })
 
 
@@ -150,14 +164,30 @@ router.get("/viewhotels", (req, res) => {
     if (req.session.login) {
         usersntrl.hotelview(1).then((hotel) => {
             usersntrl.findcounthotel().then((pagecount) => {
-                let page = 1;
-                res.render("viewhotel", { hotel, pagecount, page })
+                usersntrl.takehotelplace().then((place) => {
+                    let page = 1;
+                    res.render("viewhotel", { hotel, pagecount, page, place })
+
+                })
 
             })
         })
     } else { res.redirect("/") }
 
-})
+}),
+
+    router.post("/hotelplacesearch", (req, res) => {
+     
+            usersntrl.hotelplaceview(req.body).then((hotel) => {
+                usersntrl.findcounthotel().then((pagecount) => {
+                    usersntrl.takehotelplace().then((place) => {
+                        let page=1;
+                        res.render("viewhotel",{hotel, pagecount, page, place})
+                    })
+                })
+            })
+        })
+    
 
 
 router.get("/paginationview/:pagenum", (req, res) => {
@@ -167,8 +197,10 @@ router.get("/paginationview/:pagenum", (req, res) => {
 
         usersntrl.hotelview(page).then((hotel) => {
             usersntrl.findcounthotel().then((pagecount) => {
+                usersntrl.takehotelplace().then((place) => {
 
-                res.render("viewhotel", { hotel, pagecount, page })
+                    res.render("viewhotel", { hotel, pagecount, page, place });
+                })
             })
         })
     } else {
@@ -221,9 +253,10 @@ router.post("/gotohotel/:id", (req, res) => {
 router.get("/profile", (req, res) => {
     if (req.session.login) {
         usersntrl.profiefind(req.session.userId).then((userid) => {
-
-
-            res.render("userprofile", { userid })
+            usersntrl.takehistory(req.session.userId).then((history)=>{
+                res.render("userprofile", { userid,history })
+            })
+           
         })
 
     } else {
@@ -320,6 +353,30 @@ router.get("/favorite", (req, res) => {
         res.redirect("/")
     }
 })
+// rental items
+
+router.post("/makerentpay/:id", (req, res) => {
+
+    usersntrl.makerentrecipt(req.body, req.session.userId).then((recipt) => {
+        usersntrl.generateorderrent(recipt.insertedId, req.body.rent).then((rentrecipt) => {
+            res.json(rentrecipt)
+        })
+    })
+
+
+})
+
+router.post("/verifyrentpayment", (req, res) => {
+    usersntrl.verifywithcrypto(req.body).then(() => {
+        usersntrl.confirmorderrent(req.body['order[receipt]']).then(() => {
+            res.json({ status: true });
+        })
+    }).catch(() => {
+        res.json({ status: false })
+    })
+
+})
+// end of rental
 
 router.get("/makepaynow/:id/:fromdate/:todate/:days/:adult/:gst/:totalprice", (req, res) => {
 
@@ -387,12 +444,31 @@ router.get("/successorder", (req, res) => {
 router.get("/rentaluser", (req, res) => {
     if (req.session.login) {
         usersntrl.takepaymentforrent(req.session.userId).then((paymenthotel) => {
-            res.render("rentaluser", ({ paymenthotel }))
+            usersntrl.takerental().then((rentals) => {
+                usersntrl.rentslcategory().then((category) => {
+
+                    res.render("rentaluser", { paymenthotel, rentals, category })
+                })
+
+            })
+
         })
     } else {
-        res.render("/");
+        res.redirect("/");
     }
 })
+
+router.post("/rentcatogarysearch", (req, res) => {
+
+    usersntrl.takepaymentforrent(req.session.userId).then((paymenthotel) => {
+        usersntrl.rentcatogarysearch(req.body).then((rentals) => {
+            usersntrl.rentslcategory().then((category) => {
+                res.render("rentaluser", { paymenthotel, rentals, category })
+            })
+        })
+    })
+})
+
 
 router.get("/logout", ((req, res, next) => {
     // req.session.destroy();
@@ -400,6 +476,14 @@ router.get("/logout", ((req, res, next) => {
     req.session.userId = false
     res.redirect("/")
 }))
+router.get("/viewrental",(req,res)=>{
+    if(req.session.login){
+        usersntrl.takerenteditems(req.session.userId).then((rent)=>{
+            let name= rent[0].user.name;
+            res.render("viewrent",{rent,name})
+        })
+    }
+})
 
 
 

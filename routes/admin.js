@@ -181,7 +181,9 @@ req.session.adlogin=false
 
     router.get("/rental",(req,res)=>{
         if(req.session.adlogin){
-        res.render("admin/rental")
+            admincontrol.findcaterent().then((rent)=>{
+        res.render("admin/rental",{rent})
+    })
         }else{
             res.redirect("/admin")
         }
@@ -194,6 +196,24 @@ req.session.adlogin=false
         })
     })
 
+ 
+    router.post("/addrentcate",(req,res)=>{
+        admincontrol.addcaterent(req.body).then(()=>{
+            
+                res.redirect("/admin/rental")
+        
+            
+        })
+    })
+
+    router.get("/deletecate/:id",(req,res)=>{
+        if(req.session.login){
+            admincontrol.deletecate(req.params.id).then((result)=>{
+                res.redirect("/admin/rental")
+            })
+        }
+
+    })
 
     router.get("/viewrental",(req,res)=>{
         admincontrol.viewrental().then((rentalitems)=>{

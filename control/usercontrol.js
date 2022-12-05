@@ -29,7 +29,7 @@ module.exports = {
                 resolve(response);
             } else {
                 var user = await db.get().collection("usersdetails").findOne({ email })
-              
+
 
                 if (user) {
                     // return res.redirect("/signup")
@@ -91,17 +91,17 @@ module.exports = {
 
     hotelview: ((limit) => {
         return new Promise(async (resolve, reject) => {
-            await db.get().collection("hotels").find().skip((limit-1)*2).limit(2).toArray().then((hotels) => {
+            await db.get().collection("hotels").find().skip((limit - 1) * 10).limit(10).toArray().then((hotels) => {
                 resolve(hotels)
             })
         })
     }),
 
-    findcounthotel: (()=>{
-        return new Promise(async(resolve,reject)=>{
-            await db.get().collection("hotels").count().then((count)=>{
-                let pagecount= Math.ceil(count/2);
-                resolve( pagecount)
+    findcounthotel: (() => {
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection("hotels").count().then((count) => {
+                let pagecount = Math.ceil(count / 10);
+                resolve(pagecount)
             })
         })
     }),
@@ -161,7 +161,7 @@ module.exports = {
                     dpimage: dpimage.filename,
                     dp: true
                 }
-            }, { upsert: true }).then(()=>{
+            }, { upsert: true }).then(() => {
                 resolve();
             })
         })
@@ -245,14 +245,14 @@ module.exports = {
         })
     }),
 
-  
 
-    setpaymentnow: (async(userid, hotelid, fromdate, todate, datediff, adult, gst, totalprice) => {
-      
-       
-        
+
+    setpaymentnow: (async (userid, hotelid, fromdate, todate, datediff, adult, gst, totalprice) => {
+
+
+
         demopayment = {};
-       
+
         demopayment.userid = userid;
         demopayment.hotelid = hotelid;
         demopayment.fromdate = fromdate;
@@ -261,34 +261,34 @@ module.exports = {
         demopayment.adult = adult;
         demopayment.gst = gst;
         demopayment.totalprice = totalprice;
-        demopayment.payment='pending';
+        demopayment.payment = 'pending';
 
-        return new Promise(async(resolve, reject) => {
-          await  db.get().collection("usersdetails").findOne({email:userid}).then(async(user)=>{
-                demopayment.user=user;
-             await   db.get().collection("hotels").findOne({_id:objectid(hotelid)}).then((hotel)=>{
-                    demopayment.hotel=hotel;
-            
-    
-            db.get().collection("demopayment").insertOne(demopayment).then((response) => {
-                resolve(response)
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection("usersdetails").findOne({ email: userid }).then(async (user) => {
+                demopayment.user = user;
+                await db.get().collection("hotels").findOne({ _id: objectid(hotelid) }).then((hotel) => {
+                    demopayment.hotel = hotel;
+
+
+                    db.get().collection("demopayment").insertOne(demopayment).then((response) => {
+                        resolve(response)
+                    })
+                })
             })
         })
-    })
-})
-    
+
     }),
 
     generateorder: ((orderid, price) => {
         return new Promise((resolve, reject) => {
 
             var options = {
-                amount: price,  // amount in the smallest currency unit
+                amount: price * 100,  // amount in the smallest currency unit
                 currency: "INR",
                 receipt: "" + orderid
             };
             instance.orders.create(options, function (err, order) {
-                console.log( "kkdgjdfkj"+order);
+                console.log("kkdgjdfkj" + order);
                 resolve(order)
             });
 
@@ -298,71 +298,199 @@ module.exports = {
 
     verifywithcrypto: ((details) => {
         return new Promise((resolve, reject) => {
-            
+
             let body = details['payment[razorpay_order_id]'] + "|" + details['payment[razorpay_payment_id]'];
             const crypto = require('crypto');
             var expectedSignature = crypto.createHmac('sha256', 'YmaQQlPVZGwtuIioqOdF5s7A')
                 .update(body.toString())
                 .digest('hex')
-            if (expectedSignature === details['payment[razorpay_signature]']){
+            if (expectedSignature === details['payment[razorpay_signature]']) {
                 resolve()
-            }else{
+            } else {
                 reject()
             }
 
-    })
+        })
     }),
 
-    confirmorder : ((orderid)=>{
-        return new Promise(async(resolve, reject)=>{
-          await  db.get().collection("demopayment").updateOne({_id:objectid(orderid)},
-          {
-            $set:{payment:"booked"}
-          }).then(()=>{
-            resolve()
-          })
+    confirmorder: ((orderid) => {
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection("demopayment").updateOne({ _id: objectid(orderid) },
+                {
+                    $set: { payment: "booked" }
+                }).then(() => {
+                    resolve()
+                })
         })
     }),
 
 
-    userbooking : ((userid)=>{
-        return new Promise(async(resolve, reject)=>{
-           
-            await db.get().collection("demopayment").find({payment:"booked"}).toArray().then((booking)=>{
-             
-                var book= []
-             
-                for(let i =0; i< booking.length;i++){
-                    if(booking[i].user.email==userid){
-                        book.push(booking[i]);
-                       
+    userbooking: ((userid) => {
+        return new Promise(async (resolve, reject) => {
+
+            await db.get().collection("demopayment").find({ payment: "booked" }).toArray().then((booking) => {
+
+                var book = []
+
+                for (let i = 0; i < booking.length; i++) {
+                    if (new Date() < new Date(new Date(booking[i].todate))) {
+                        if (booking[i].user.email == userid) {
+                            book.push(booking[i]);
+
+                        }
+                    } else {
+                        console.log(new Date() + ">" + new Date(new Date(booking[i].todate)));
+
                     }
-                    
+                    if (new Date() < new Date(new Date(booking[i].todate))) {
+                        console.log(new Date() + "<" + new Date(new Date(booking[i].todate)));
+                    } else {
+
+                        console.log(new Date() + ">" + new Date(new Date(booking[i].todate)));
+                    }
+
                 }
-              
-             
+
+
                 resolve(book);
             })
         })
     }),
 
 
-    download : ((paymentid)=>{
-        return new Promise(async(resolve,reject)=>{
-        await db.get().collection("demopayment").findOne({ _id:paymentid}).then((payment)=>{
-            resolve(payment);
+    download: ((paymentid) => {
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection("demopayment").findOne({ _id: paymentid }).then((payment) => {
+                resolve(payment);
+            })
         })
-        }) 
     }),
 
-    takepaymentforrent : ((userid)=>{
-        return new Promise(async(resolve,reject)=>{
-          let paymentresult =  await db.get().collection("demopayment").find({payment:"booked",'user.email':userid}).toArray();
-           resolve(paymentresult);
+    takepaymentforrent: ((userid) => {
+        return new Promise(async (resolve, reject) => {
+            let paymentresult = await db.get().collection("demopayment").find({ payment: "booked", 'user.email': userid }).toArray();
+            resolve(paymentresult);
+        })
+    }),
+
+    takerental: (() => {
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection("renalitems").find().toArray().then((rentals) => {
+                resolve(rentals)
+            })
+        })
+    }),
+
+    rentslcategory: (() => {
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection("places").find().toArray().then((rentals) => {
+                resolve(rentals)
+            })
+        })
+
+    }),
+
+
+    rentcatogarysearch: ((category) => {
+
+        let cate = category.rentcategory.toLowerCase();
+        return new Promise(async (resolve, reject) => {
+            let rental = await db.get().collection("renalitems").find({ category: cate }).toArray();
+            console.log(rental);
+            resolve(rental);
+        })
+    }),
+
+    makerentrecipt: ((rentbody, userid) => {
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection("usersdetails").findOne({ email: userid }).then(async (user) => {
+
+                rentbody.user = user;
+                rentbody.payment = "pending"
+                await db.get().collection("rentmoney").insertOne(rentbody).then((receipt) => {
+                    resolve(receipt)
+                })
+            })
+        })
+    }),
+
+    generateorderrent: ((receiptid, rent) => {
+        return new Promise((resolve, reject) => {
+
+            var options = {
+                amount: rent * 100,  // amount in the smallest currency unit
+                currency: "INR",
+                receipt: "" + receiptid
+            };
+            instance.orders.create(options, function (err, order) {
+                console.log("kkdgjdfkj" + order);
+                resolve(order)
+            });
+
+        })
+    }),
+
+    confirmorderrent: ((orderid) => {
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection("rentmoney").updateOne({ _id: objectid(orderid) },
+                {
+                    $set: { payment: "booked" }
+                }).then(() => {
+                    resolve()
+                })
+        })
+    }),
+
+    takerentalitmsimg: (() => {
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection("renalitems").find().toArray().then((rental) => {
+                resolve(rental)
+            })
+        })
+    }),
+    takehotelplace: (() => {
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection("places").find().toArray().then((place) => {
+                resolve(place)
+            })
+        })
+    }),
+
+    hotelplaceview: ((places) => {
+        let { place } = places;
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection("hotels").find({ place: place }).toArray().then((hotel) => {
+                resolve(hotel);
+            })
+        })
+    }),
+
+
+    takehistory: ((userid) => {
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection("demopayment").find({ payment: "booked" }).toArray().then((booking) => {
+                var book = []
+                for (let i = 0; i < booking.length; i++) {
+                    if (new Date() > new Date(new Date(booking[i].todate))) {
+                        if (booking[i].user.email == userid) {
+                            book.push(booking[i]);
+                        }
+                    } else {
+                        console.log(new Date() + "<" + new Date(new Date(booking[i].todate)));
+
+                    }
+                }
+                resolve(book);
+            })
+        })
+    }),
+
+    takerenteditems : ((userid)=>{
+        console.log(userid);
+        return new Promise(async(resolve, reject) => {
+           let rent = await db.get().collection("rentmoney").find({'user.email':userid, payment:"booked"}).toArray();
+            resolve(rent);
         })
     })
 
-
-
 }
-

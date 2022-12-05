@@ -6,7 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="author" content="Untree.co">
 	<link rel="shortcut icon" href="favicon.png">
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 	<link rel="stylesheet"
 		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
@@ -18,6 +19,9 @@
 	<link
 		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Source+Serif+Pro:wght@400;700&display=swap"
 		rel="stylesheet">
+
+	<link rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
 
 	<link rel="stylesheet" href="/stylesheetA/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/stylesheetA/css/owl.carousel.min.css">
@@ -52,17 +56,20 @@
 				<span class=" ">
 
 					<img src="\images\users\here we go-logos_white.png" class="img-fluid"
-						style="height: 4rem; margin-left: -108px;" alt="Sample image">
+						style="height: 4rem; margin-left: 0px;" alt="Sample image">
 
 				</span>
 				<ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right">
 					<li class=""><a href="/">Home</a></li>
 
 
-					<!-- <li> <a href="/otp">Message</a></li> -->
-					<li class="active"> <a href="/profile">Profile</a></li>
+
 					<li><a href="/favorite">Favorites</a></li>
+					<li class="active"> <a href="/rentaluser">Purchase rental items</a> </li>
+					<li><a href="/ueserbooking">Your booking</a></li>
 					<li> <a href="/logout">Logout</a></li>
+					<li> <a href="/profile">Profile</a></li>
+
 				</ul>
 
 				<a href="#"
@@ -77,7 +84,7 @@
 
 
 	<div class="hero1">
-		<div class="container mb-5">
+		<div class="container mb-1">
 
 			<div class="row align-items-center">
 				<div class="col-lg-7">
@@ -89,162 +96,375 @@
 
 
 
-		
+
+
+
 
 
 	</div>
+	<div>
+		<!-- <div class="container">
+		<div class="row">
 
-
-
-
-
-
-
-	<div class="py-5 cta-section">
+			<div class="col-12 " >
+				<form action="/categoryrent" method="post">
+				<label for="category">Select by catogory</label>
+				<select name="category" id="category">
+					<% for(let rent of category){ %> 
+					<option ><%= rent.category  %></option>
+					<% } %> 
+				</select>
+				<button type="submit" class="btn ">Search</button>
+			</form>
+			</div>
+	
+		</div>
+	</div> -->
 		<div class="container">
-			<div class="row text-center">
-				<div class="col-md-12">
-					<h2 class="mb-2 text-white">Lets you Explore the Best. Contact Us Now</h2>
-					<p class="mb-4 lead text-white text-white-opacity">Lorem ipsum dolor sit amet, consectetur
-						adipisicing elit. Excepturi, fugit?</p>
-					<p class="mb-0"><a href="booking.html"
-							class="btn btn-outline-white text-white btn-md font-weight-bold">Get in touch</a></p>
+			<div class="row">
+				<div class="col-md-6">
 				</div>
-			</div>
-		</div>
-	</div>
 
-	<div class="site-footer">
-		<div class="inner first">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-6 col-lg-4">
-						<div class="widget">
-							<h3 class="heading">About Tour</h3>
-							<p>Far far away, behind the word mountains, far from the countries Vokalia and
-								Consonantia, there live the blind texts.</p>
+				<div class="col-md-6 ">
+
+					<form action="/rentcatogarysearch" method="post">
+						<div class="input-group p-3">
+
+							<select class="custom-select" name="rentcategory" id="inputGroupSelect04"
+								onclick="invokeswitch()">
+								<% for(let rent of category){ %>
+									<option>
+										<%= rent.venue.toUpperCase() %>
+									</option>
+									<% } %>
+							</select>
+							<div class="input-group-append">
+								<button class="btn btn-outline-secondary" style="background-color: #1a374d;"
+									type="submit">Search by Place</button>
+							</div>
+
 						</div>
-						<div class="widget">
-							<ul class="list-unstyled social">
-								<li><a href="#"><span class="icon-twitter"></span></a></li>
-								<li><a href="#"><span class="icon-instagram"></span></a></li>
-								<li><a href="#"><span class="icon-facebook"></span></a></li>
-								<li><a href="#"><span class="icon-linkedin"></span></a></li>
-								<li><a href="#"><span class="icon-dribbble"></span></a></li>
-								<li><a href="#"><span class="icon-pinterest"></span></a></li>
-								<li><a href="#"><span class="icon-apple"></span></a></li>
-								<li><a href="#"><span class="icon-google"></span></a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-md-6 col-lg-2 pl-lg-5">
-						<div class="widget">
-							<h3 class="heading">Pages</h3>
-							<ul class="links list-unstyled">
-								<li><a href="#">Blog</a></li>
-								<li><a href="#">About</a></li>
-								<li><a href="#">Contact</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-md-6 col-lg-2">
-						<div class="widget">
-							<h3 class="heading">Resources</h3>
-							<ul class="links list-unstyled">
-								<li><a href="#">Blog</a></li>
-								<li><a href="#">About</a></li>
-								<li><a href="#">Contact</a></li>
-							</ul>
-						</div>
-					</div>
-					<div class="col-md-6 col-lg-4">
-						<div class="widget">
-							<h3 class="heading">Contact</h3>
-							<ul class="list-unstyled quick-info links">
-								<li class="email"><a href="#">mail@example.com</a></li>
-								<li class="phone"><a href="#">+1 222 212 3819</a></li>
-								<li class="address"><a href="#">43 Raymouth Rd. Baltemoer, London 3910</a></li>
-							</ul>
-						</div>
-					</div>
+					</form>
 				</div>
+
 			</div>
 		</div>
 
 
+		<div class="container">
+			<div class="row">
+				<% for(let rent of rentals){ %>
+					<div class="col-md-2 m-3 ">
+						<img src="/images/product/<%= rent.imageUrl %>" style="width:100px;height:80px;" alt="ll">
+						<h6>
+							<%= rent.name.toUpperCase() %>
+						</h6>
+						<p>RS <%= rent.rent %> per one Ticket </p>
+						<!-- <a href="/buyrent/<% rent._id %> " class="btn text-white"
+							style="background-color: #1a374d;">Take</a> --> 
+							<label for="act">How Many Ticket </label>
+							<input type="number" id="act" style="width:100%;" min="1" max="20"><br>
+							<button class="btn p-2 mt-1 text-white" style="background-color: #1a374d; "
+											onclick="ready('<%= rent.rent %>' )" id="pay">Pay now</button>
 
-		<div class="inner dark">
+						 <!-- <div id="accordion">
+							<div class="card">
+								<div class="card-header" id="headingOne ">
+									<h5 class="mb-0">
+										<button class="btn text-white" style="background-color: #1a374d;"
+											data-toggle="collapse" data-target="#collapseOne" aria-expanded="true"
+											aria-controls="collapseOne">
+											Take
+										</button>
+									</h5>
+								</div>
+
+								<div id="collapseOne" class="collapse " aria-labelledby="headingOne"
+									data-parent="#accordion">
+									<div class="card-body text-center">
+
+										<label for="nos">How many </label><br>
+										<input type="number" style="width: 100%;" name="nos" id="nos"> <br><br>
+										<label for="hr">How muny days</label>
+										<input type="number" style="width: 100%;" name="hr" id="hr"> <br>
+										<label for="hotel">Wich hotel</label><br>
+
+										<br><button class="btn p-2 mt-1 text-white" style="background-color: #1a374d; "
+											onclick="ready('<%= rent.rent %>' )" id="pay">Pay now</button>
+
+
+
+									</div>
+								</div>
+							</div>
+						</div> -->
+
+
+
+						<!-- Button trigger modal
+						<button type="button" class="btn btn-primary" data-toggle="modal"
+							data-target="#exampleModalLong">
+							Take
+						</button>
+
+						<!-- Modal -->
+						<!-- <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog"
+							aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title" id="exampleModalLongTitle"> <%= rent.name.toUpperCase()  %>  </h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										...
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-dismiss="modal">Close</button>
+										<button type="button" class="btn btn-primary">Save changes</button>
+									</div>
+								</div>
+							</div>
+						</div>  -->
+
+
+					</div>
+					<% } %>
+			</div>
+
+		</div>
+
+
+
+
+
+
+		<div class="py-5 mt-5 cta-section">
 			<div class="container">
 				<div class="row text-center">
-					<div class="col-md-8 mb-3 mb-md-0 mx-auto">
-						<p>Copyright &copy;
-							<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash;
-							Designed with love by <a href="https://untree.co" class="link-highlight">Untree.co</a>
-							<!-- License information: https://untree.co/license/ -->Distributed By <a
-								href="https://themewagon.com" target="_blank">ThemeWagon</a>
-						</p>
+					<div class="col-md-12">
+						<h2 class="mb-2 text-white">Lets you Explore the Best. Contact Us Now</h2>
+						<p class="mb-4 lead text-white text-white-opacity">Lorem ipsum dolor sit amet, consectetur
+							adipisicing elit. Excepturi, fugit?</p>
+						<p class="mb-0"><a href="booking.html"
+								class="btn btn-outline-white text-white btn-md font-weight-bold">Get in touch</a></p>
 					</div>
-
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div id="overlayer"></div>
-	<div class="loader">
-		<div class="spinner-border" role="status">
-			<span class="sr-only">Loading...</span>
+		<div class="site-footer">
+			<div class="inner first">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-6 col-lg-4">
+							<div class="widget">
+								<h3 class="heading">About Tour</h3>
+								<p>Far far away, behind the word mountains, far from the countries Vokalia and
+									Consonantia, there live the blind texts.</p>
+							</div>
+							<div class="widget">
+								<ul class="list-unstyled social">
+									<li><a href="#"><span class="icon-twitter"></span></a></li>
+									<li><a href="#"><span class="icon-instagram"></span></a></li>
+									<li><a href="#"><span class="icon-facebook"></span></a></li>
+									<li><a href="#"><span class="icon-linkedin"></span></a></li>
+									<li><a href="#"><span class="icon-dribbble"></span></a></li>
+									<li><a href="#"><span class="icon-pinterest"></span></a></li>
+									<li><a href="#"><span class="icon-apple"></span></a></li>
+									<li><a href="#"><span class="icon-google"></span></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-2 pl-lg-5">
+							<div class="widget">
+								<h3 class="heading">Pages</h3>
+								<ul class="links list-unstyled">
+									<li><a href="#">Blog</a></li>
+									<li><a href="#">About</a></li>
+									<li><a href="#">Contact</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-2">
+							<div class="widget">
+								<h3 class="heading">Resources</h3>
+								<ul class="links list-unstyled">
+									<li><a href="#">Blog</a></li>
+									<li><a href="#">About</a></li>
+									<li><a href="#">Contact</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-6 col-lg-4">
+							<div class="widget">
+								<h3 class="heading">Contact</h3>
+								<ul class="list-unstyled quick-info links">
+									<li class="email"><a href="#">mail@example.com</a></li>
+									<li class="phone"><a href="#">+1 222 212 3819</a></li>
+									<li class="address"><a href="#">43 Raymouth Rd. Baltemoer, London 3910</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+
+			<div class="inner dark">
+				<div class="container">
+					<div class="row text-center">
+						<div class="col-md-8 mb-3 mb-md-0 mx-auto">
+							<p>Copyright &copy;
+								<script>document.write(new Date().getFullYear());</script>. All Rights Reserved. &mdash;
+								Designed with love by <a href="https://untree.co" class="link-highlight">Untree.co</a>
+								<!-- License information: https://untree.co/license/ -->Distributed By <a
+									href="https://themewagon.com" target="_blank">ThemeWagon</a>
+							</p>
+						</div>
+
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>
 
-	<script src="/stylesheetA/js/jquery-3.4.1.min.js"></script>
-	<script src="/stylesheetA/js/popper.min.js"></script>
-	<script src="/stylesheetA/js/bootstrap.min.js"></script>
-	<script src="/stylesheetA/js/owl.carousel.min.js"></script>
-	<script src="/stylesheetA/js/jquery.animateNumber.min.js"></script>
-	<script src="/stylesheetA/js/jquery.waypoints.min.js"></script>
-	<script src="/stylesheetA/js/jquery.fancybox.min.js"></script>
-	<script src="/stylesheetA/js/aos.js"></script>
-	<script src="/stylesheetA/js/moment.min.js"></script>
-	<script src="/stylesheetA/js/daterangepicker.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-	<script src="/stylesheetA/js/typed.js"></script>
-	<script>
-		$(function () {
-			var slides = $('.slides'),
-				images = slides.find('img');
+		<div id="overlayer"></div>
+		<div class="loader">
+			<div class="spinner-border" role="status">
+				<span class="sr-only">Loading...</span>
+			</div>
+		</div>
 
-			images.each(function (i) {
-				$(this).attr('data-id', i + 1);
+		<script src="/stylesheetA/js/jquery-3.4.1.min.js"></script>
+		<script src="/stylesheetA/js/popper.min.js"></script>
+		<script src="/stylesheetA/js/bootstrap.min.js"></script>
+		<script src="/stylesheetA/js/owl.carousel.min.js"></script>
+		<script src="/stylesheetA/js/jquery.animateNumber.min.js"></script>
+		<script src="/stylesheetA/js/jquery.waypoints.min.js"></script>
+		<script src="/stylesheetA/js/jquery.fancybox.min.js"></script>
+		<script src="/stylesheetA/js/aos.js"></script>
+		<script src="/stylesheetA/js/moment.min.js"></script>
+		<script src="/stylesheetA/js/daterangepicker.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		
+		<script src="/stylesheetA/js/typed.js"></script>
+		<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+		<script>
+			$(function () {
+				var slides = $('.slides'),
+					images = slides.find('img');
+
+				images.each(function (i) {
+					$(this).attr('data-id', i + 1);
+				})
+
+				var typed = new Typed('.typed-words', {
+					strings: ["San Francisco.", " Paris.", " New Zealand.", " Maui.", " London."],
+					typeSpeed: 80,
+					backSpeed: 80,
+					backDelay: 4000,
+					startDelay: 1000,
+					loop: true,
+					showCursor: true,
+					preStringTyped: (arrayPos, self) => {
+						arrayPos++;
+						console.log(arrayPos);
+						$('.slides img').removeClass('active');
+						$('.slides img[data-id="' + arrayPos + '"]').addClass('active');
+					}
+
+				});
 			})
-
-			var typed = new Typed('.typed-words', {
-				strings: ["San Francisco.", " Paris.", " New Zealand.", " Maui.", " London."],
-				typeSpeed: 80,
-				backSpeed: 80,
-				backDelay: 4000,
-				startDelay: 1000,
-				loop: true,
-				showCursor: true,
-				preStringTyped: (arrayPos, self) => {
-					arrayPos++;
-					console.log(arrayPos);
-					$('.slides img').removeClass('active');
-					$('.slides img[data-id="' + arrayPos + '"]').addClass('active');
-				}
-
-			});
-		})
-	</script>
-
- <script>
+		</script>
 
 
- </script>
+		<script>
+			function ready(rent) {
 
-	
 
-	<script src="../stylesheetA/js/custom.js"></script>
+				$.ajax({
+					url: "/makerentpay",
+					method: "post",
+					data: {
+						nos: Number(document.querySelector("#act").value),
+						rent: rent
+
+
+					},
+
+					success: (response) => {
+					
+						razorparhere(response);
+					}
+				})
+			}
+
+			function razorparhere(order) {
+				
+				console.log(order);
+				var options = {
+				
+					"key": "rzp_test_DVZJTcZnuOdAWp", // Enter the Key ID generated from the Dashboard
+					"amount": order.amount * 100, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+					"currency": "INR",
+					"name": "herewego",
+					"description": "Test Transaction",
+					"image": "https://example.com/your_logo",
+					"order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+					"handler": function (response) {
+						// alert(response.razorpay_payment_id);
+						// alert(response.razorpay_order_id);
+						// alert(response.razorpay_signature)
+						alert("kkk")
+						
+						verifypayment(response, order)
+
+
+					},
+					"prefill": {
+						"name": "Gaurav Kumar",
+						"email": "gaurav.kumar@example.com",
+						"contact": "9999999999"
+					},
+					"notes": {
+						"address": "Razorpay Corporate Office"
+					},
+					"theme": {
+						"color": "#3399cc"
+					}
+				};
+
+				var rzp1 = new Razorpay(options);
+				rzp1.open();
+			}
+
+			function verifypayment(payment, order) {
+				
+
+				$.ajax({
+					url: "/verifyrentpayment",
+					data: { payment: payment, order: order },
+					method: "post",
+					success: (response) => {
+						if (response.status) {
+							location.href = "/successorder"
+						} else {
+							alert("failed")
+						}
+					}
+				})
+			}
+
+		</script>
+
+
+
+		<script src="../stylesheetA/js/custom.js"></script>
 
 </body>
 

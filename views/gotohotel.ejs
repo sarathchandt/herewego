@@ -65,15 +65,17 @@
 						style="height:4rem; margin-left: -108px;" alt="Sample image">
 
 				</span>
-
 				<ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right">
-					<li class="active"><a href="index.html">Home</a></li>
+					<li class=""><a href="/">Home</a></li>
 
-					<!-- <li> <a href="/otp">essage</a></li> -->
-					<li> <a href="/profile">Profile</a></li>
-					<li> <a href="/logout">Logout</a></li>
+
 
 					<li><a href="/favorite">Favorites</a></li>
+					<li class=""> <a href="/rentaluser">Purchase rental items</a> </li>
+					<li class=""><a href="/ueserbooking">Your booking</a></li>
+					<li> <a href="/logout">Logout</a></li>
+					<li> <a href="/profile">Profile</a></li>
+
 				</ul>
 
 				<a href="#"
@@ -384,13 +386,13 @@
 
 			</div>
 
-			<div class="col-md-4 mt-3 " id="fixedprice">
+			<div class="col-md-4 mt-3 text-black" id="fixedprice">
 				<div class="card" style="width: 18rem;" id="fixedprice">
 					<div class="card-body" id="fixedprice">
 						<h5 class="card-title d-inline" id="fixedpric">₹ <b style="color:#1a374d ;" id="fixedpric">
 								<%= hotel.price.toLocaleString() %>
 							</b> </h5>
-						<p class="d-inline " id="fixedpric"> per night </p>
+						<p class="d-inline text-black" id="fixedpric"> per night </p>
 
 						<span class="material-symbols-outlined d-inline "
 							style="color: goldenrod;position: relative;top: 4px;left: 23px;">

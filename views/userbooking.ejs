@@ -38,7 +38,7 @@
 </head>
 
 <body>
-
+     <a href="/viewrental" class="btn text-white" style="background-color:#6998ab; position: fixed; right: 10px;bottom: 10px;z-index: 2;">View Items</a>
 
     <div class="site-mobile-menu site-navbar-target">
         <div class="site-mobile-menu-header">
@@ -56,16 +56,21 @@
                 <span class=" ">
 
                     <img src="..\images\users\here we go-logos_white.png" class="img-fluid"
-                        style="height: 4rem; margin-left: -108px;" alt="Sample image">
+                        style="height: 4rem; margin-left: 0 px;" alt="Sample image">
 
                 </span>
                 <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right">
-                    <li class="active"><a href="/">Home</a></li>
+					<li class=""><a href="/">Home</a></li>
 
-                    <li> <a href="/logout">logout</a></li>
-                    <li> <a href="/otp">message</a></li>
-                    <li> <a href="/profile">Profile</a></li>
-                </ul>
+
+
+					<li><a href="/favorite">Favorites</a></li>
+					<li class=""> <a href="/rentaluser">Purchase rental items</a> </li>
+					<li class="active"><a href="/ueserbooking">Your booking</a></li>
+					<li> <a href="/logout">Logout</a></li>
+					<li> <a href="/profile">Profile</a></li>
+
+				</ul>
 
                 <a href="#"
                     class="burger ml-auto float-right site-menu-toggle js-menu-toggle d-inline-block d-lg-none light"
@@ -98,6 +103,7 @@
     <div class="container-fluid text-center">
         <h3 class="text-center text-white">YOUR BOOKINGS</h3>
         <% for(let bookings of booking){ %>
+            <% if(bookings.todate ){ %> 
             <div class="row">
 
 
@@ -205,6 +211,7 @@
                 <a href="#" class="btn btn-body m-1 border" onclick="closebill('<%= bookings._id %>')">Close</a>
             </div>
             <hr>
+            <% } %> 
             <% } %>
 
 

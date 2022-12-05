@@ -52,17 +52,20 @@
 				<span class=" ">
 
 					<img src="\images\users\here we go-logos_white.png" class="img-fluid"
-						style="height: 4rem; margin-left: -108px;" alt="Sample image">
+						style="height: 4rem; margin-left: 0px;" alt="Sample image">
 
 				</span>
 				<ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right">
-					<li class="active"><a href="index.html">Home</a></li>
+					<li class=""><a href="/">Home</a></li>
 
 
-					<!-- <li> <a href="/otp">Message</a></li> -->
-					<li> <a href="/profile">Profile</a></li>
+
 					<li><a href="/favorite">Favorites</a></li>
+					<li class=""> <a href="/rentaluser">Purchase rental items</a> </li>
+					<li class=""><a href="/ueserbooking">Your booking</a></li>
 					<li> <a href="/logout">Logout</a></li>
+					<li class=""> <a href="/profile">Profile</a></li>
+
 				</ul>
 
 				<a href="#"
@@ -77,7 +80,7 @@
 
 
 	<div class="hero1">
-		<div class="container mb-5">
+		<div class="container mb-1">
 
 			<div class="row align-items-center">
 				<div class="col-lg-7">
@@ -86,17 +89,43 @@
 				</div>
 			</div>
 		</div>
+	</div>
+	<div class='container'>
+		<div class="row">
+			<div class="col-md-6">
 
-
-
-		<div class="container mt-5 text-center">
-			<div class="text-center">
-
-				<a href="#" class="btn  mt-5" id="all" style="background-color: white;" onclick="gotogoa('all')">All</a>
-				<a href="#" class="btn mt-5" style="background-color: white;" id="goa" onclick="gotogoa('goa')">Goa</a>
-				<a href="#" class="btn  mt-5" style="background-color: white;" id="hyderabad"
-					onclick="gotogoa('hyderabad')">Hyderabad</a>
 			</div>
+			<div class="col-md-6">
+				<form action="/hotelplacesearch" method="post">
+					<div class="input-group p-3">
+
+						<select class="custom-select" name="place" id="inputGroupSelect04">
+							<% for(let places of place){ %> 
+								<option>
+								<%= places.venue  %> 
+								</option>
+								<% } %> 
+						</select>
+						<div class="input-group-append">
+							<button class="btn btn-outline-secondary" style="background-color: #1a374d;"
+								type="submit">Search by place</button>
+						</div>
+
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+		<div class="container mt-5 mb-5 text-center">
+			<!-- <div class="text-center">
+
+				<a href="#" class="btn  mt-1" id="all" style="background-color: white;" onclick="gotogoa('all')">All</a>
+				<a href="#" class="btn mt-1" style="background-color: white;" id="goa" onclick="gotogoa('goa')">Goa</a>
+				<a href="#" class="btn  mt-1" style="background-color: white;" id="hyderabad"
+					onclick="gotogoa('hyderabad')">Hyderabad</a>
+			</div> -->
 
 			<div class="row">
 				<% for(let hotels of hotel){ %>
@@ -105,7 +134,7 @@
 					<div class="col-md-4 <%= hotels.place %>" style="display: block ;">
 
 
-						<div class=" card m-5  " style="width: 20rem;">
+						<div class=" card m-5  " style="width: 20rem;display: flex;justify-content:center;">
 							<img class="card-img-top" style="height:10rem;"
 								src="/images/product/<%= hotels.imageUrl %> " alt="Card image cap">
 							<div class="card-body">
@@ -145,13 +174,13 @@
 			</div>
 			<% if(page==1){ %> 
 				<div class="d-inline"  >
-					<a  href="/paginationview/<%= page-1  %> " class="bg-secondary  text-white rounded p-2" id="backward" style="display: none;"  ><span class="material-symbols-outlined p-2" style="position:relative;top:6px;left:0px;">
+					<a  href="/paginationview/<%= page-1  %> " class="bg-secondary  text-white rounded mb-5 p-2" id="backward" style="display: none;"  ><span class="material-symbols-outlined p-2" style="position:relative;top:6px;left:0px;">
 						arrow_back_ios
 						</span></a>
 					</div>
 				<% }else{ %> 
 			<div class="d-inline" >
-			<a  href="/paginationview/<%= page-1  %> " class="bg-secondary  text-white rounded p-2" id="backward"   ><span class="material-symbols-outlined p-2" style="position:relative;top:6px;left:0px;">
+			<a  href="/paginationview/<%= page-1  %> " class="bg-secondary  text-white rounded mb-5 p-2" id="backward"   ><span class="material-symbols-outlined p-2" style="position:relative;top:6px;left:0px;">
 				arrow_back_ios
 				</span></a>
 			</div>
@@ -160,21 +189,21 @@
 			<div class="d-inline" >
 				
 				<% if(page==i){ %> 
-				<a  href="/paginationview/<%= i %> " class="bg-dark text-white rounded p-2" ><%= i %></a>
+				<a  href="/paginationview/<%= i %> " class="bg-dark text-white rounded mb-5 p-2" ><%= i %></a>
 				<% }else{ %> 
-					<a  href="/paginationview/<%= i %> " class="bg-white rounded p-2"   ><%= i %></a>
+					<a  href="/paginationview/<%= i %> " class="bg-white rounded mb-5 p-2"   ><%= i %></a>
 					<% } %> 
 			</div>
 			<% } %> 
 			<% if(page== Number(pagecount)){ %> 
 			<div class="d-inline">
-				<a  href="/paginationview/<%= page+1  %> " class="bg-secondary  text-white rounded p-2" id="forward"  style="display: none;"><span class="material-symbols-outlined p-2" style="position:relative;top:6px;left:0px;">
+				<a  href="/paginationview/<%= page+1  %> " class="bg-secondary  text-white rounded mb-5 p-2" id="forward"  style="display: none;"><span class="material-symbols-outlined p-2" style="position:relative;top:6px;left:0px;">
 					arrow_forward_ios
 					</span></a>
 				</div>
 			<% }else{ %> 
 				<div class="d-inline">
-					<a  href="/paginationview/<%= page+1  %> " class="bg-secondary  text-white rounded p-2" id="forward"  ><span class="material-symbols-outlined p-2" style="position:relative;top:6px;left:0px;">
+					<a  href="/paginationview/<%= page+1  %> " class="bg-secondary  text-white rounded mb-5 p-2" id="forward"  ><span class="material-symbols-outlined p-2" style="position:relative;top:6px;left:0px;">
 						arrow_forward_ios
 						</span></a>
 					</div>
@@ -184,7 +213,7 @@
 		</div>
 
 
-	</div>
+	
 
 
 

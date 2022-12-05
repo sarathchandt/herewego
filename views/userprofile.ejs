@@ -52,17 +52,20 @@
 				<span class=" ">
 
 					<img src="\images\users\here we go-logos_white.png" class="img-fluid"
-						style="height: 4rem; margin-left: -108px;" alt="Sample image">
+						style="height: 4rem; margin-left: 0px;" alt="Sample image">
 
 				</span>
 				<ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right">
 					<li class=""><a href="/">Home</a></li>
 
 
-					<!-- <li> <a href="/otp">Message</a></li> -->
-					<li class="active"> <a href="/profile">Profile</a></li>
+
 					<li><a href="/favorite">Favorites</a></li>
+					<li class=""> <a href="/rentaluser">Purchase rental items</a> </li>
+					<li class=""><a href="/ueserbooking">Your booking</a></li>
 					<li> <a href="/logout">Logout</a></li>
+					<li class="active"> <a href="/profile">Profile</a></li>
+
 				</ul>
 
 				<a href="#"
@@ -77,7 +80,7 @@
 
 
 	<div class="hero1">
-		<div class="container mb-5">
+		<div class="container mb-1">
 
 			<div class="row align-items-center">
 				<div class="col-lg-7">
@@ -86,19 +89,36 @@
 				</div>
 			</div>
 		</div>
-
-
-
-		
-
-
 	</div>
 
 
 
 
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+			<img src="./images/users/cv__29__generated-removebg-preview.png" style="width:100% ;" alt="">
+		</div>
+		<div class="col-md-9 p-3 text-left">
+			<h3> Hai.. <%=    userid.name %></h3>
+			<p>email : <%= userid.email  %> </p>
+		</div>
 
-
+	</div>
+</div>
+<div class="container text-center mt-5">
+	<div class="row">
+		<div class="col-12">
+			<h4>Booking History</h4>
+			<% for(let his of history){ %> 
+			<div class="alert alert-primary text-left" role="alert">
+				<h6 class=""> Hotel :  <%= his.hotel.name.toUpperCase()  %> </h6>
+				<p class="">Check out : <%= his.todate  %> </p>
+			  </div>
+			  <% } %> 
+		</div>
+	</div>
+</div>
 
 	<div class="py-5 cta-section">
 		<div class="container">

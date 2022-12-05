@@ -84,7 +84,7 @@ module.exports = {
      
         
      
-      let responses={}
+      let responses={} 
         return new Promise(async(resolve,reject)=>{
             var there=await db.get().collection("places").findOne({venue});
             
@@ -248,6 +248,30 @@ await db.get().collection("hotels").find().toArray().then((hotel)=>{
             return new Promise(async(resolve, reject)=>{
                 await db.get().collection("demopayment").find({payment:"booked"}).toArray().then((order)=>{
                     resolve(order)
+                })
+            })
+        }),
+
+        addcaterent: ((cate)=>{
+            return new Promise((resolve, reject) => {
+                db.get().collection("rentcatogory").insertOne(cate).then((cate)=>{
+                    resolve()
+                })
+            })
+        }),
+
+        findcaterent : (()=>{
+            return new Promise(async(resolve, reject) => {
+                await db.get().collection("places").find().toArray().then((rent)=>{
+                    resolve(rent)
+                })
+            })
+        }),
+
+        deletecate : ((rentid)=>{
+            return new Promise(async(resolve,reject)=>{
+             await   db.get().collection("rentcatogory").deleteOne({_id:objectid(rentid)}).then((result)=>{
+                    resolve(result)
                 })
             })
         })

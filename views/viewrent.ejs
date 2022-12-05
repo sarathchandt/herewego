@@ -18,8 +18,10 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Source+Serif+Pro:wght@400;700&display=swap"
         rel="stylesheet">
-
-
+    <!-- bill -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+        integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 
     <link rel="stylesheet" href="../stylesheetA/css/bootstrap.min.css">
@@ -37,7 +39,6 @@
 
 <body>
 
-
     <div class="site-mobile-menu site-navbar-target">
         <div class="site-mobile-menu-header">
             <div class="site-mobile-menu-close">
@@ -54,7 +55,7 @@
                 <span class=" ">
 
                     <img src="..\images\users\here we go-logos_white.png" class="img-fluid"
-                        style="height: 4rem; margin-left: -108px;" alt="Sample image">
+                        style="height: 4rem; margin-left: 0 px;" alt="Sample image">
 
                 </span>
                 <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right">
@@ -64,7 +65,7 @@
 
 					<li><a href="/favorite">Favorites</a></li>
 					<li class=""> <a href="/rentaluser">Purchase rental items</a> </li>
-					<li class=""><a href="/ueserbooking">Your booking</a></li>
+					<li class="active"><a href="/ueserbooking">Your booking</a></li>
 					<li> <a href="/logout">Logout</a></li>
 					<li> <a href="/profile">Profile</a></li>
 
@@ -93,29 +94,23 @@
             </div>
         </div>
 
-   </div>
 
-
-<div class="container-fluid">
-<div class="row">
-    <div class="col-12 text-center">
-        <img src="../images/users/icons8-ok-512.png" style="width: 30%;" alt="">
-        <h3 class="text-success">Payment success</h3>
     </div>
-    <div class="col-md-6 text-center">
-        <a href="/" class="btn btn-info">Go to home</a>
     </div>
-    <div class="col-md-6 text-center">
-        <a href="/ueserbooking" class="btn btn-info">See bookings</a>
+<div>
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h4>Hy.. <%= name %> </h4>
+            <% for(let rents of rent){ %> 
+            <div class="alert alert-primary" role="alert">
+            <h6><%=  %> </h6>
+              </div>
+            <% } %> 
+        </div>
     </div>
 </div>
 </div>
-
-
-
-
-
-    </div>
 
     <div class="py-5 cta-section">
         <div class="container">
@@ -266,6 +261,10 @@
             });
         })
     </script>
+
+   
+
+
 
     <script src="../stylesheetA/js/custom.js"></script>
 

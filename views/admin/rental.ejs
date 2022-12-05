@@ -78,7 +78,7 @@
                     </div>
                     <a href="/admin/putbaner" class="nav-item nav-link ">Baners</a>
                     <a href="widget.html" class="nav-item nav-link">Flights</a>
-                    <a href="/admin/rental" class="nav-item nav-link">Rental Services</a>
+                    <a href="/admin/rental" class="nav-item nav-link active">Activity</a>
                     <!-- <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
                     <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a> -->
                     <!-- <div class="nav-item dropdown">
@@ -196,74 +196,87 @@
             <!-- user managements -->
             <div>
 
-                <h3 class="text-center mt-3">Add rental items</h3>
+                <h3 class="text-center mt-3">Activity</h3>
 
                 <div>
                     <form action="/admin/rentitems" method="post" enctype="multipart/form-data">
-                    <div class="form-group p-4">
-                        <label for="name">Name </label>
-                        <input type="text" name="name" class="form-control" id="exampleInputPassword1" required><br>
-                        
-                        <label for="name">Rent amount per 24hr </label>
-                        <input type="number" name="rent" class="form-control" id="exampleInputPassword1" required><br>
+                        <div class="form-group p-4">
+                            <label for="name">Name of the location </label>
+                            <input type="text" name="name" class="form-control" id="exampleInputPassword1" required><br>
 
-                        <label for="exampleInputPassword1">Add images</label>
-                        <input type="file" class="form-control" name="image" id="exampleInputPassword1" required><br>
-                        <button type="submit" class="btn btn-primary ">Add</button><br>
-                        <a href="/admin/viewrental" class="btn btn-success mt-1">View rental items</a>
+                            <label for="category">Category </label>
+                            <select name="category"  style="width:100% ; height: 35px;" id="category" id="exampleInputPassword1" required>
+                                <% for(let rents of rent ){ %>
+                                    <option  class="form-control">
+                                        <%= rents.venue %>
+                                    </option>
+                                    <% } %>
+                            </select><br>
+                            <br><label for="name">Amount per ticket </label>
+                            <input type="number" name="rent" class="form-control" id="exampleInputPassword1"
+                                required><br>
+
+                            <label for="exampleInputPassword1">Add images</label>
+                            <input type="file" class="form-control" name="image" id="exampleInputPassword1"
+                                required><br>
+                            <button type="submit" class="btn btn-primary ">Add</button><br>
+                            <a href="/admin/viewrental" class="btn btn-success mt-1">View Activities</a>
 
 
-                    </div>
-                </form>
-                
+                        </div>
+                    </form>
+
                 </div>
-            </div>
-              
-        <!-- Content End -->
+            </div><br><br>
+   
+
+           
+
+            <!-- Content End -->
 
 
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-    </div>
+            <!-- Back to Top -->
+            <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        </div>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../stylesheetB/lib/chart/chart.min.js"></script>
-    <script src="../stylesheetB/lib/easing/easing.min.js"></script>
-    <script src="../stylesheetB/lib/waypoints/waypoints.min.js"></script>
-    <script src="../stylesheetB/lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="../stylesheetB/lib/tempusdominus/js/moment.min.js"></script>
-    <script src="../stylesheetB/lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="../stylesheetB/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        function removebaner(id) {
-            Swal.fire({
-                title: "Are you sure ?",
-                text: "This baner will delete permenantly",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#f54242",
-                cancelButtonColor: "#a39e9e",
-                confirmButtonText: "Yes delete"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const form = document.createElement('form');
-                    form.method = "get";
-                    form.action = `/admin/removebaner/${id}`;
-                    document.body.appendChild(form);
-                    form.submit()
-                    Swal.fire({
-                        text: "File deleted successfuly ",
-                    })
-                }
-            })
-        }
-    </script>
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../stylesheetB/lib/chart/chart.min.js"></script>
+        <script src="../stylesheetB/lib/easing/easing.min.js"></script>
+        <script src="../stylesheetB/lib/waypoints/waypoints.min.js"></script>
+        <script src="../stylesheetB/lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="../stylesheetB/lib/tempusdominus/js/moment.min.js"></script>
+        <script src="../stylesheetB/lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="../stylesheetB/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            function removebaner(id) {
+                Swal.fire({
+                    title: "Are you sure ?",
+                    text: "This baner will delete permenantly",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#f54242",
+                    cancelButtonColor: "#a39e9e",
+                    confirmButtonText: "Yes delete"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const form = document.createElement('form');
+                        form.method = "get";
+                        form.action = `/admin/removebaner/${id}`;
+                        document.body.appendChild(form);
+                        form.submit()
+                        Swal.fire({
+                            text: "File deleted successfuly ",
+                        })
+                    }
+                })
+            }
+        </script>
 
-    <!-- Template Javascript -->
-    <script src="../stylesheetB/js/main.js"></script>
+        <!-- Template Javascript -->
+        <script src="../stylesheetB/js/main.js"></script>
 </body>
 
 </html>
