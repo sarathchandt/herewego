@@ -274,5 +274,25 @@ await db.get().collection("hotels").find().toArray().then((hotel)=>{
                     resolve(result)
                 })
             })
+        }),
+
+        takesuceessorder : (()=>{
+            return new Promise(async(resolve, reject) => {
+                let orders={};
+                await db.get().collection("demopayment").find({payment:"booked"}).toArray().then(async(hotels)=>{
+                    orders.hotels=hotels;
+                    db.get().collection("rentmoney").find({payment:"booked"}).toArray().then(async(activity)=>{
+                        orders.activity=activity;   
+                   let paymenthotelresult =   await  db.get().collection("demopayment").aggregate(
+                            [
+                              { $sort : { date : 1 } },{$match:{ payment:"booked"}}
+                            ]
+                         ).toArray();
+                         orders.result=paymenthotelresult;
+                
+                        resolve(orders)
+                    })
+                })
+            })
         })
 }

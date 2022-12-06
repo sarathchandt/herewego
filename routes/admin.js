@@ -273,7 +273,66 @@ req.session.adlogin=false
         else{
             res.redirect("/admin")
         } 
-    })
+    }),
+     router.get("/report",(req,res)=>{
+        if(req.session.adlogin){
+            admincontrol.takesuceessorder().then((orders)=>{
+            let bookingcount=orders.hotels.length;
+            let activitycount=orders.activity.length;
+            var totalbookingPrice = 0;
+            var totalactivityPrice = 0
+             for(let i=0; i< bookingcount; i++){
+                totalbookingPrice =  Number (orders.hotels[i].totalprice) + totalbookingPrice;
+             }
+             for(let i=0; i<activitycount; i++){
+                totalactivityPrice =  Number(orders.activity[i].rent) + totalactivityPrice;
+             }
+
+           
+             let months=[];
+             let thismonth =  new Date();
+             let month = thismonth.getMonth();
+             console.log(month+1);
+             for(let i=0; i<orders.result.length; i++){
+                let comingmonth= new Date(orders.result[i].date);
+                let matchingmonth= comingmonth.getMonth();
+                let year=comingmonth.getFullYear();
+                let day = comingmonth.getDate()
+                if(month==matchingmonth){
+                    orders.result[i].year=year;
+                    orders.result[i].day=day;
+                    orders.result[i].month=matchingmonth+1;
+                    months.push(orders.result[i]);
+                }   
+             }
+             
+             let actmonth=[];
+             for(let i=0; i<orders.activity.length; i++){
+                let comingmonth= new Date(orders.activity[i].date);
+                let matchingmonth= comingmonth.getMonth();
+                let year=comingmonth.getFullYear();
+                let day = comingmonth.getDate()
+                if(month==matchingmonth){
+                    orders.activity[i].year=year;
+                    orders.activity[i].day=day;
+                    orders.activity[i].month=matchingmonth+1;
+                    actmonth.push(orders.activity[i]);
+                }   
+             }
+
+             console.log(months);
+            res.render("admin/dashbord",{bookingcount, 
+                                        activitycount,
+                                        totalbookingPrice,
+                                        totalactivityPrice, 
+                                        months,
+                                        actmonth });
+            })
+         
+        }else{
+            res.redirect("/admin")
+        }
+     })
 
 
 

@@ -355,10 +355,10 @@ router.get("/favorite", (req, res) => {
 })
 // rental items
 
-router.post("/makerentpay/:id", (req, res) => {
+router.post("/makerentpay", (req, res) => {
 
     usersntrl.makerentrecipt(req.body, req.session.userId).then((recipt) => {
-        usersntrl.generateorderrent(recipt.insertedId, req.body.rent).then((rentrecipt) => {
+        usersntrl.generateorderrent(recipt.insertedId, req.body.rent, req.body.nos).then((rentrecipt) => {
             res.json(rentrecipt)
         })
     })

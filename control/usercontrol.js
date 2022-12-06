@@ -91,7 +91,7 @@ module.exports = {
 
     hotelview: ((limit) => {
         return new Promise(async (resolve, reject) => {
-            await db.get().collection("hotels").find().skip((limit - 1) * 10).limit(10).toArray().then((hotels) => {
+            await db.get().collection("hotels").find().skip((limit - 1) * 2).limit(2).toArray().then((hotels) => {
                 resolve(hotels)
             })
         })
@@ -100,7 +100,7 @@ module.exports = {
     findcounthotel: (() => {
         return new Promise(async (resolve, reject) => {
             await db.get().collection("hotels").count().then((count) => {
-                let pagecount = Math.ceil(count / 10);
+                let pagecount = Math.ceil(count / 2);
                 resolve(pagecount)
             })
         })
@@ -268,6 +268,7 @@ module.exports = {
                 demopayment.user = user;
                 await db.get().collection("hotels").findOne({ _id: objectid(hotelid) }).then((hotel) => {
                     demopayment.hotel = hotel;
+                    demopayment.date= new Date();
 
 
                     db.get().collection("demopayment").insertOne(demopayment).then((response) => {
@@ -404,7 +405,7 @@ module.exports = {
     makerentrecipt: ((rentbody, userid) => {
         return new Promise(async (resolve, reject) => {
             await db.get().collection("usersdetails").findOne({ email: userid }).then(async (user) => {
-
+                rentbody.date=new Date();   
                 rentbody.user = user;
                 rentbody.payment = "pending"
                 await db.get().collection("rentmoney").insertOne(rentbody).then((receipt) => {
@@ -414,11 +415,11 @@ module.exports = {
         })
     }),
 
-    generateorderrent: ((receiptid, rent) => {
+    generateorderrent: ((receiptid, rent, nos) => {
         return new Promise((resolve, reject) => {
-
+          
             var options = {
-                amount: rent * 100,  // amount in the smallest currency unit
+                amount: rent * 100 ,  // amount in the smallest currency unit
                 currency: "INR",
                 receipt: "" + receiptid
             };

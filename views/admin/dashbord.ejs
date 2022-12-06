@@ -63,22 +63,21 @@
                     <a href="/admin" class="nav-item nav-link ">
                         <!-- <i
                             class="fa fa-tachometer-alt me-2"></i> -->
-                        Users
-                    </a>
+                            Users</a>
                     <div class="nav-item ">
                         <a href="/admin/addhotel" class="nav-link " data-bs-toggle="">
                             <!-- <i class="fa fa-laptop me-2"></i> -->
-                            Hotels
-                        </a>
+                                Hotels</a>
                         <!-- <div class="dropdown-menu bg-transparent border-0">
                             <a href="button.html" class="dropdown-item">Buttons</a>
                             <a href="typography.html" class="dropdown-item">Typography</a>
                             <a href="element.html" class="dropdown-item">Other Elements</a>
                         </div> -->
                     </div>
+               
                     <a href="/admin/rental" class="nav-item nav-link">Activity</a>
                     <a href="/admin/booking" class="nav-item nav-link">View booking</a>
-                    <a href="/admin/report" class="nav-item nav-link">Reports</a>
+                    <a href="/admin/report" class="nav-item nav-link active">Reports</a>
                     <!-- <a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>
                     <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Charts</a> -->
                     <!-- <div class="nav-item dropdown">
@@ -108,8 +107,8 @@
                     <i class="fa fa-bars"></i>
                 </a>
                 <form action="/admin/search" method="post" class="d-none d-md-flex ms-4">
-                    <input class="form-control border-0" type="search" name="search">
-                    <button type="submit" class="btn btn-primary">Search</button>
+                    <input class="form-control border-0" type="search" name="search" >
+                    <button  type="submit" class="btn btn-primary" >Search</button>
                 </form>
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
@@ -194,59 +193,158 @@
             <!-- Navbar End -->
 
             <!-- user managements -->
-            <div>
-                <div class="main-header">
-                    <h4>Add baners</h4>
-                    <br><br>
+        <div> 
 
-                    <form class="m-5" action="/admin/addbaner" method="post" enctype="multipart/form-data">
-
-
-
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Add images</label>
-                            <input type="file" class="form-control" name="image" id="exampleInputPassword1">
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-line fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Total Hotel Bookings</p>
+                                <h6 class="mb-0"> <%= bookingcount  %> </h6>
+                            </div>
                         </div>
-
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                    <br><br>
-                    <h4>Baner lists</h4>
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Images</th>
-
-                                <th scope="col">Handle</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <% for(let baners of baner){ %>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td><img src="../images/product/<%= baners.imageUrl %>"
-                                            style="height: 50px; width: 50px;" alt=""> </td>
-
-                                    <td>
-                                        <!-- <a href="/admin/removebaner/"
-                                            class="btn btn-secondary">Remove</a> -->
-
-                                        <a onclick="removebaner('<%= baners._id %>')"
-                                            class="btn btn-secondary">Remove</a>
-
-                                    </td>
-                                </tr>
-                                <% } %>
-
-                        </tbody>
-                    </table>
-
-
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-bar fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Total Activity Bookings</p>
+                                <h6 class="mb-0"><%= activitycount  %> </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-area fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Total Hotel Revenue</p>
+                                <h6 class="mb-0"> RS <%= totalbookingPrice  %> </h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-xl-3">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-4">
+                            <i class="fa fa-chart-pie fa-3x text-primary"></i>
+                            <div class="ms-3">
+                                <p class="mb-2">Total Activity Revenue</p>
+                                <h6 class="mb-0"> RS <%= totalactivityPrice  %> </h6>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-
             </div>
+            <!-- Sale & Revenue End -->
 
+
+            <!-- Sales Chart Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Worldwide Sales</h6>
+                                <a href="">Show All</a>
+                            </div>
+                            <canvas id="worldwide-sales"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0">Salse & Revenue</h6>
+                                <a href="">Show All</a>
+                            </div>
+                            <canvas id="salse-revenue"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Sales Chart End -->
+
+
+            <!-- Recent Sales Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0">This Month Hotel Bookings</h6>
+                        <a href=""></a>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table text-start align-middle table-bordered table-hover mb-0">
+                            <thead>
+                                <tr class="text-dark">
+                                    <th scope="col"><input class="form-check-input" type="checkbox"></th>
+                                    <th scope="col">Date</th>
+                                  
+                                    <th scope="col">Customer</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Hotel</th>
+                                    <th scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for(let month of months){ %> 
+                                <tr>
+                                    <td><input class="form-check-input" type="checkbox"></td>
+                                    <td>   <%= month.day  %>/<%= month.month  %>/<%= month.year  %>     </td>
+                                  
+                                    <td><%= month.user.name  %> </td>
+                                    <td><%= month.totalprice %> </td>
+                                    <td><%= month.hotel.name  %> </td>
+                                    <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                                </tr>
+                            <% } %> 
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Recent Sales End -->
+<!-- activity -->
+<div class="container-fluid pt-4 px-4">
+    <div class="bg-light text-center rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">This Month Activity Bookings</h6>
+            <a href=""></a>
+        </div>
+        <div class="table-responsive">
+            <table class="table text-start align-middle table-bordered table-hover mb-0">
+                <thead>
+                    <tr class="text-dark">
+                        <th scope="col"><input class="form-check-input" type="checkbox"></th>
+                        <th scope="col">Date</th>
+                      
+                        <th scope="col">Customer</th>
+                        <th scope="col">Amount</th>
+                      
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(let activity of actmonth){ %> 
+                    <tr>
+                        <td><input class="form-check-input" type="checkbox"></td>
+                        <td>   <%= activity.day  %>/<%= activity.month  %>/<%= activity.year  %>     </td>
+                      
+                        <td><%= activity.user.name  %> </td>
+                        <td><%= activity.rent %> </td>
+                       
+                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
+                    </tr>
+                <% } %> 
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+</div>
+<!-- end of activity -->
+
+            <!-- Widgets Start -->
+            <!-- Widgets End -->
 
         </div>
         <!-- Content End -->
@@ -266,31 +364,6 @@
     <script src="../stylesheetB/lib/tempusdominus/js/moment.min.js"></script>
     <script src="../stylesheetB/lib/tempusdominus/js/moment-timezone.min.js"></script>
     <script src="../stylesheetB/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        function removebaner(id) {
-            Swal.fire({
-                title: "Are you sure ?",
-                text: "This baner will delete permenantly",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#f54242",
-                cancelButtonColor: "#a39e9e",
-                confirmButtonText: "Yes delete"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const form = document.createElement('form');
-                    form.method = "get";
-                    form.action = `/admin/removebaner/${id}`;
-                    document.body.appendChild(form);
-                    form.submit()
-                    Swal.fire({
-                        text: "File deleted successfuly ",
-                    })
-                }
-            })
-        }
-    </script>
 
     <!-- Template Javascript -->
     <script src="../stylesheetB/js/main.js"></script>

@@ -3,7 +3,7 @@ let state ={
     db:null
 }
 module.exports.connect=(done)=>{
-    const url="mongodb://localhost:27017";
+    const url="mongodb+srv://herewego:ZsGdRuatWkgvGnPF@cluster0.y8yvwno.mongodb.net/herewego?retryWrites=true&w=majority";
     const db="herewego"
 
     mongoClient.connect(url,(err,data)=>{
