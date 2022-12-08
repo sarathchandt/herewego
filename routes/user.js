@@ -177,17 +177,17 @@ router.get("/viewhotels", (req, res) => {
 }),
 
     router.post("/hotelplacesearch", (req, res) => {
-     
-            usersntrl.hotelplaceview(req.body).then((hotel) => {
-                usersntrl.findcounthotel().then((pagecount) => {
-                    usersntrl.takehotelplace().then((place) => {
-                        let page=1;
-                        res.render("viewhotel",{hotel, pagecount, page, place})
-                    })
+
+        usersntrl.hotelplaceview(req.body).then((hotel) => {
+            usersntrl.findcounthotel().then((pagecount) => {
+                usersntrl.takehotelplace().then((place) => {
+                    let page = 1;
+                    res.render("viewhotel", { hotel, pagecount, page, place })
                 })
             })
         })
-    
+    })
+
 
 
 router.get("/paginationview/:pagenum", (req, res) => {
@@ -253,10 +253,10 @@ router.post("/gotohotel/:id", (req, res) => {
 router.get("/profile", (req, res) => {
     if (req.session.login) {
         usersntrl.profiefind(req.session.userId).then((userid) => {
-            usersntrl.takehistory(req.session.userId).then((history)=>{
-                res.render("userprofile", { userid,history })
+            usersntrl.takehistory(req.session.userId).then((history) => {
+                res.render("userprofile", { userid, history })
             })
-           
+
         })
 
     } else {
@@ -287,15 +287,20 @@ router.get("/deletedp", (req, res) => {
 })
 
 router.post("/paymenthere/:id", (req, res) => {
+
+
     if (req.session.userId) {
+
         let temp = req.body;
         const { fromdate, todate, adult } = temp
         console.log("dul" + adult);
+
 
         let p = new Date(fromdate)
         let q = new Date(todate)
         const diffTime = Math.abs(p - q);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
 
 
 
@@ -317,6 +322,7 @@ router.post("/paymenthere/:id", (req, res) => {
 
             res.render("topayment", { hotel, temp, p, q })
         })
+
     } else {
         res.redirect("/")
     }
@@ -358,7 +364,7 @@ router.get("/favorite", (req, res) => {
 router.post("/makerentpay", (req, res) => {
 
     usersntrl.makerentrecipt(req.body, req.session.userId).then((recipt) => {
-        usersntrl.generateorderrent(recipt.insertedId, req.body.rent, req.body.nos).then((rentrecipt) => {
+        usersntrl.generateorderrent(recipt.insertedId, req.body.rent).then((rentrecipt) => {
             res.json(rentrecipt)
         })
     })
@@ -469,6 +475,16 @@ router.post("/rentcatogarysearch", (req, res) => {
     })
 })
 
+router.get("/activate/:id",(req,res)=>{
+    if(req.session.login){
+        usersntrl.activate(req.params.id).then(()=>{
+            res.redirect("/viewrental")
+        })
+    }else{
+        res.redirect("/")
+    }
+})
+
 
 router.get("/logout", ((req, res, next) => {
     // req.session.destroy();
@@ -476,11 +492,12 @@ router.get("/logout", ((req, res, next) => {
     req.session.userId = false
     res.redirect("/")
 }))
-router.get("/viewrental",(req,res)=>{
-    if(req.session.login){
-        usersntrl.takerenteditems(req.session.userId).then((rent)=>{
-            let name= rent[0].user.name;
-            res.render("viewrent",{rent,name})
+router.get("/viewrental", (req, res) => {
+    if (req.session.login) {
+        usersntrl.takerenteditems(req.session.userId).then((rent) => {
+            
+            let name = rent[0]?.user?.name;
+            res.render("viewrent", { rent, name })
         })
     }
 })

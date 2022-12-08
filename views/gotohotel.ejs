@@ -62,7 +62,7 @@
 				<span class=" ">
 
 					<img src="..\images\users\here we go-logos_white.png" class="img-fluid"
-						style="height:4rem; margin-left: -108px;" alt="Sample image">
+						style="height:80px; margin-left: 0px;" alt="Sample image">
 
 				</span>
 				<ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right">
@@ -93,27 +93,32 @@
 	<div class="hero text-white">
 
 
+	</div>
 
 
+	<div class="container-fluid">
 
-		<div class="container-fluid">
-
-			<div class="row">
-				<div class="col-12 text-center">
-					<!-- <h2 class="text-white">
+		<div class="row">
+			<div class="col-12 text-center">
+				<!-- <h2 class="text-white">
 						<%= hotel.name.toUpperCase() %>
 					</h2> -->
 
+				<div style=" display: flex;justify-content:center;">
+					<img src="../images/product/<%= hotel.imageUrl %> " class="rounded d-md-block d-none "
+						style="width: 80%;height:25rem;">
 
-					<img src="../images/product/<%= hotel.imageUrl %> " class="rounded" style="width: 80%;height:25rem;"
-						alt="haai">
+					<img src="../images/product/<%= hotel.imageUrl %> " class="rounded d-md-none d-block"
+						style="width: 80%;">
 				</div>
+
 			</div>
-
-
-
-
 		</div>
+
+
+
+
+	</div>
 
 
 	<div class="container-fluid">
@@ -386,7 +391,8 @@
 
 			</div>
 
-			<div class="col-md-4 mt-3 text-black" id="fixedprice">
+			<div class="col-md-4 mt-3 text-black " style="display: flex;justify-content:center;" id="fixedprice">
+
 				<div class="card" style="width: 18rem;" id="fixedprice">
 					<div class="card-body" id="fixedprice">
 						<h5 class="card-title d-inline" id="fixedpric">₹ <b style="color:#1a374d ;" id="fixedpric">
@@ -404,15 +410,17 @@
 									<%= Math.floor(states.rate) %>.0
 								</h6>
 								<% } %>
+
 									<% if(states.length==0){ %>
 										<h6 class="d-inline text-black">0.0</h6>
 										<% } %>
 											<hr>
 											<h6 class="card-subtitle mb-2 text-muted" id="fixedprice"></h6>
 
-											<!-- form for payment -->
 
-											<form action="/paymenthere/<%= hotel._id %>" method="post" id="fixedprice">
+
+
+											<form action="/paymenthere/<%= hotel._id %>" method="post">
 												<label for="fromdate">Check-in Date</label><br>
 
 												<input type="date" id="fromdate" style="width:100%;" name="fromdate"
@@ -420,12 +428,11 @@
 												<label for="todate">Check-out Date</label><br>
 
 												<input type="date" style="width:100%;" id="todate" name="todate"
-													required><br><br>
+													onchange="date()" required><br><br>
 												<label for="adult">Select Adults </label><br>
 
-												<select name="adult" style="width:100%;" id="adult" onclick="date()"
-													required>
-													<option value="1">0</option>
+												<select name="adult" style="width:100%;" id="adult" required>
+
 													<option value="1">1</option>
 													<option value="2">2</option>
 													<option value="3">3</option>
@@ -433,30 +440,32 @@
 
 													<option value="5">5</option>
 												</select><br><br>
-												<p class="text-danger" id="inst" style="display:none;">You have choosed
+												<p class="text-danger" id="inst" style="display:none;">You have
+													choosed
 													Wrong date....!</p>
 
-												<button type="submit" class="btn text-white " disabled id="btn1"
-													style="background-color: #1a374d;display: block;">Reserve</button>
-
-												<button type="submit" class="btn text-white " id="btn2"
-													style="background-color: #1a374d;display:none;">Reserve</button>
-
-
+													<button type="submit" class="btn text-white " id="btn"
+													style="background-color: #1a374d;display: block;" disabled>Reserve</button>
+													<button type="submit" class="btn text-white " id="btn1"
+													style="background-color: #1a374d;display: none;" >Reserve</button>
+												<!-- end of the form -->
 											</form>
-
-											<!-- end of the form -->
-
-
 					</div>
 				</div>
 
 			</div>
 
+
+
+
+
+			
+
 		</div>
 
 
-	</div>	</div>
+	</div>
+
 
 
 
@@ -558,27 +567,55 @@
 	<script src="sweetalert2.all.min.js">
 	</script>
 
+
 	<script>
 		function date() {
 
-			let from = document.querySelector("#fromdate").value;
-			let to = document.querySelector("#todate").value;
-			if (from < to) {
+			let x = document.querySelector("#fromdate").value;
+			let y = document.querySelector("#todate").value;
+			let nos = document.querySelector("#adult").value;
 
-				document.querySelector('#btn1').style.display = 'none';
-				document.querySelector('#btn2').style.display = 'block';
-				document.querySelector("#inst").style.display = 'none';
+
+			if (x > y) {
+				document.querySelector("#inst").style.display = "block";
+				document.querySelector("#btn1").style.display = "none"
+				document.querySelector("#btn").style.display = "block"
+
 			} else {
-
-				document.querySelector('#btn1').style.display = 'block';
-				document.querySelector('#btn2').style.display = 'none';
-				document.querySelector("#inst").style.display = 'block';
+				document.querySelector("#inst").style.display = "none";
+				document.querySelector("#btn").style.display = "none"
+				document.querySelector("#btn1").style.display = "block"
 
 			}
 
 
 		}
+
 	</script>
+	<script>
+		function dates(){
+			let x = document.querySelector("#fromdates").value;
+			let y = document.querySelector("#todates").value;
+			let nos = document.querySelector("#adults").value;
+
+
+			if (x > y) {
+				document.querySelector("#insts").style.display = "block";
+				document.querySelector("#btn1s").style.display = "none"
+				document.querySelector("#btns").style.display = "block"
+
+			} else {
+				document.querySelector("#insts").style.display = "none";
+				document.querySelector("#btns").style.display = "none"
+				document.querySelector("#btn1s").style.display = "block"
+
+			}
+
+		}
+		
+		</script>
+
+
 
 
 	<script>

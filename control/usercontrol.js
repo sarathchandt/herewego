@@ -91,7 +91,7 @@ module.exports = {
 
     hotelview: ((limit) => {
         return new Promise(async (resolve, reject) => {
-            await db.get().collection("hotels").find().skip((limit - 1) * 2).limit(2).toArray().then((hotels) => {
+            await db.get().collection("hotels").find().skip((limit - 1) * 10).limit(10).toArray().then((hotels) => {
                 resolve(hotels)
             })
         })
@@ -100,9 +100,9 @@ module.exports = {
     findcounthotel: (() => {
         return new Promise(async (resolve, reject) => {
             await db.get().collection("hotels").count().then((count) => {
-                let pagecount = Math.ceil(count / 2);
+                let pagecount = Math.ceil(count / 10);
                 resolve(pagecount)
-            })
+            })  
         })
     }),
 
@@ -403,30 +403,39 @@ module.exports = {
     }),
 
     makerentrecipt: ((rentbody, userid) => {
+        let{rent}=rentbody;
         return new Promise(async (resolve, reject) => {
             await db.get().collection("usersdetails").findOne({ email: userid }).then(async (user) => {
-                rentbody.date=new Date();   
-                rentbody.user = user;
-                rentbody.payment = "pending"
-                await db.get().collection("rentmoney").insertOne(rentbody).then((receipt) => {
-                    resolve(receipt)
+                await db.get().collection("renalitems").findOne({_id:objectid(rent)}).then(async(item)=>{
+                    rentbody.date=new Date();   
+                    rentbody.user = user;
+                    rentbody.payment = "pending"
+                    rentbody.item=item;
+                    await db.get().collection("rentmoney").insertOne(rentbody).then((receipt) => {
+                        resolve(receipt)
+                    })
                 })
+            
             })
         })
     }),
 
-    generateorderrent: ((receiptid, rent, nos) => {
-        return new Promise((resolve, reject) => {
+    generateorderrent: ((receiptid, rent) => {
+        return new Promise(async(resolve, reject) => {
+    await db.get().collection("renalitems").findOne({_id:objectid(rent)}).then((item)=>{
+        let money = Number(item.rent)
+        var options = {
+            amount: money * 100 ,  // amount in the smallest currency unit
+            currency: "INR",
+            receipt: "" + receiptid
+        };
+        instance.orders.create(options, function (err, order) {
+            console.log("kkdgjdfkj" + order);
+            resolve(order)
+        });
+    })
           
-            var options = {
-                amount: rent * 100 ,  // amount in the smallest currency unit
-                currency: "INR",
-                receipt: "" + receiptid
-            };
-            instance.orders.create(options, function (err, order) {
-                console.log("kkdgjdfkj" + order);
-                resolve(order)
-            });
+       
 
         })
     }),
@@ -491,6 +500,14 @@ module.exports = {
         return new Promise(async(resolve, reject) => {
            let rent = await db.get().collection("rentmoney").find({'user.email':userid, payment:"booked"}).toArray();
             resolve(rent);
+        })
+    }),
+
+    activate :((activeid)=>{
+        return new Promise(async(resolve, reject) => {
+            db.get().collection("rentmoney").deleteOne({_id:objectid(activeid)}).then(()=>{
+                resolve()
+            })
         })
     })
 

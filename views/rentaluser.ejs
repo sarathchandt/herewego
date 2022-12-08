@@ -165,7 +165,7 @@
 							style="background-color: #1a374d;">Take</a> --> 
 
 							<button class="btn p-2 mt-1 text-white" style="background-color: #1a374d; "
-											onclick="ready('<%= rent.rent %>' )" id="pay">Pay now</button>
+											onclick="ready('<%= rent._id %>' )" id="pay">Pay now</button>
 
 						 <!-- <div id="accordion">
 							<div class="card">
@@ -385,7 +385,7 @@
 
 		<script>
 			function ready(rent) {
-
+				alert(rent)
 
 				$.ajax({
 					url: "/makerentpay",
