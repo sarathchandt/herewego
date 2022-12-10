@@ -391,7 +391,7 @@
 
 			</div>
 
-			<div class="col-md-4 mt-3 text-black " style="display: flex;justify-content:center;" id="fixedprice">
+			<div class="col-md-4 mt-3 text-black" id="fixedprice">
 
 				<div class="card" style="width: 18rem;" id="fixedprice">
 					<div class="card-body" id="fixedprice">
@@ -440,28 +440,40 @@
 
 													<option value="5">5</option>
 												</select><br><br>
+												<label for="todate">Enter coupon</label><br>
+
+												<input type="text" class="d-inline-block" style="width:100%;" id="coup"
+													placeholder="Optional">
+
+												<a href="#" class=" mt-1 badge p-2 text-white d-inline-block"
+													style="background-color: #1a374d;" onclick="checkcoup()">Check</a>
+
+												<br>
+												<br>
 												<p class="text-danger" id="inst" style="display:none;">You have
 													choosed
 													Wrong date....!</p>
 
-													<button type="submit" class="btn text-white " id="btn"
-													style="background-color: #1a374d;display: block;" disabled>Reserve</button>
-													<button type="submit" class="btn text-white " id="btn1"
-													style="background-color: #1a374d;display: none;" >Reserve</button>
+												<button type="submit" class="btn text-white " id="btn"
+													style="background-color: #1a374d;display: block;"
+													disabled>Reserve</button>
+												<button type="submit" class="btn text-white " id="btn1"
+													style="background-color: #1a374d;display: none;">Reserve</button>
 												<!-- end of the form -->
 											</form>
 					</div>
 				</div>
 
 			</div>
-
-
-
-
-
-			
-
 		</div>
+
+
+
+
+
+
+
+	</div>
 
 
 	</div>
@@ -566,6 +578,7 @@
 	<script src="../stylesheetA/js/daterangepicker.js"></script>
 	<script src="sweetalert2.all.min.js">
 	</script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 
 	<script>
@@ -593,7 +606,7 @@
 
 	</script>
 	<script>
-		function dates(){
+		function dates() {
 			let x = document.querySelector("#fromdates").value;
 			let y = document.querySelector("#todates").value;
 			let nos = document.querySelector("#adults").value;
@@ -612,8 +625,8 @@
 			}
 
 		}
-		
-		</script>
+
+	</script>
 
 
 
@@ -656,17 +669,74 @@
 	<script src="../stylesheetA/js/custom.js"></script>
 	<script src="sweetalert2.all.min.js"></script>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-	<!-- <script>
-			function foo(){
-				
-				Swal.fire({
-  					title: 'Error!',
-  					text: 'Do you want to continue',
-  				     icon: 'error',
- 				 	confirmButtonText: 'Cool'
-})
-			}
-		</script> -->
+
+
+	<script>
+		function checkcoup() {
+			$.ajax({
+				url: "/checkcoupon/<%= hotel._id %>",
+				method: "post",
+				data: {
+					coupon: document.querySelector("#coup").value
+				},
+				success: (response) => {
+					if (response.isok) {
+						const Toast = Swal.mixin({
+							toast: true,
+							position: 'top-end',
+							showConfirmButton: false,
+							timer: 3000,
+							timerProgressBar: true,
+							didOpen: (toast) => {
+								toast.addEventListener('mouseenter', Swal.stopTimer)
+								toast.addEventListener('mouseleave', Swal.resumeTimer)
+							}
+						})
+
+						Toast.fire({
+							icon: 'success',
+							title: 'Coupon added  successfully'
+						})
+					} else {
+						const Toast = Swal.mixin({
+							toast: true,
+							position: 'top-end',
+							showConfirmButton: false,
+							timer: 3000,
+							timerProgressBar: true,
+							didOpen: (toast) => {
+								toast.addEventListener('mouseenter', Swal.stopTimer)
+								toast.addEventListener('mouseleave', Swal.resumeTimer)
+							}
+						})
+
+						Toast.fire({
+							icon: 'error',
+							title: 'Entered Coupon Is Wrong'
+						})
+					}
+				}
+			})
+		}
+	</script> -->
+
+	<script>
+	// async function  checkcoup  ()  {
+	// 		const { value: coupon } = await Swal.fire({
+	// 			title: 'Add Coupon',
+	// 			input: 'text',
+	// 			inputLabel: '',
+	// 			inputPlaceholder: 'Enter your coupon code'
+	// 		}).then((coupon)=>{
+	// 		if (coupon) {
+	// 			const form =document.createElement('form');
+	// 			form.method="get";
+    //                     form.action=`/checkcoupon/${coupon}`;
+    //                     document.body.appendChild(form);
+    //                     form.submit()
+	// 		}}).then(())
+	// 	}
+	</script>
 
 
 </body>

@@ -102,7 +102,7 @@ module.exports = {
             await db.get().collection("hotels").count().then((count) => {
                 let pagecount = Math.ceil(count / 10);
                 resolve(pagecount)
-            })  
+            })
         })
     }),
 
@@ -268,7 +268,7 @@ module.exports = {
                 demopayment.user = user;
                 await db.get().collection("hotels").findOne({ _id: objectid(hotelid) }).then((hotel) => {
                     demopayment.hotel = hotel;
-                    demopayment.date= new Date();
+                    demopayment.date = new Date();
 
 
                     db.get().collection("demopayment").insertOne(demopayment).then((response) => {
@@ -281,16 +281,18 @@ module.exports = {
     }),
 
     generateorder: ((orderid, price) => {
+        let realprice = parseInt(price)
         return new Promise((resolve, reject) => {
 
             var options = {
-                amount: price * 100,  // amount in the smallest currency unit
+                amount: realprice * 100,  // amount in the smallest currency unit
                 currency: "INR",
                 receipt: "" + orderid
             };
             instance.orders.create(options, function (err, order) {
                 console.log("kkdgjdfkj" + order);
                 resolve(order)
+                console.log(err);
             });
 
         })
@@ -403,39 +405,39 @@ module.exports = {
     }),
 
     makerentrecipt: ((rentbody, userid) => {
-        let{rent}=rentbody;
+        let { rent } = rentbody;
         return new Promise(async (resolve, reject) => {
             await db.get().collection("usersdetails").findOne({ email: userid }).then(async (user) => {
-                await db.get().collection("renalitems").findOne({_id:objectid(rent)}).then(async(item)=>{
-                    rentbody.date=new Date();   
+                await db.get().collection("renalitems").findOne({ _id: objectid(rent) }).then(async (item) => {
+                    rentbody.date = new Date();
                     rentbody.user = user;
                     rentbody.payment = "pending"
-                    rentbody.item=item;
+                    rentbody.item = item;
                     await db.get().collection("rentmoney").insertOne(rentbody).then((receipt) => {
                         resolve(receipt)
                     })
                 })
-            
+
             })
         })
     }),
 
     generateorderrent: ((receiptid, rent) => {
-        return new Promise(async(resolve, reject) => {
-    await db.get().collection("renalitems").findOne({_id:objectid(rent)}).then((item)=>{
-        let money = Number(item.rent)
-        var options = {
-            amount: money * 100 ,  // amount in the smallest currency unit
-            currency: "INR",
-            receipt: "" + receiptid
-        };
-        instance.orders.create(options, function (err, order) {
-            console.log("kkdgjdfkj" + order);
-            resolve(order)
-        });
-    })
-          
-       
+        return new Promise(async (resolve, reject) => {
+            await db.get().collection("renalitems").findOne({ _id: objectid(rent) }).then((item) => {
+                let money = Number(item.rent)
+                var options = {
+                    amount: money * 100,  // amount in the smallest currency unit
+                    currency: "INR",
+                    receipt: "" + receiptid
+                };
+                instance.orders.create(options, function (err, order) {
+                    console.log("kkdgjdfkj" + order);
+                    resolve(order)
+                });
+            })
+
+
 
         })
     }),
@@ -495,18 +497,62 @@ module.exports = {
         })
     }),
 
-    takerenteditems : ((userid)=>{
+    takerenteditems: ((userid) => {
         console.log(userid);
-        return new Promise(async(resolve, reject) => {
-           let rent = await db.get().collection("rentmoney").find({'user.email':userid, payment:"booked"}).toArray();
+        return new Promise(async (resolve, reject) => {
+            let rent = await db.get().collection("rentmoney").find({ 'user.email': userid, payment: "booked" }).toArray();
             resolve(rent);
         })
     }),
 
-    activate :((activeid)=>{
-        return new Promise(async(resolve, reject) => {
-            db.get().collection("rentmoney").deleteOne({_id:objectid(activeid)}).then(()=>{
+    activate: ((activeid) => {
+        return new Promise(async (resolve, reject) => {
+            db.get().collection("rentmoney").deleteOne({ _id: objectid(activeid) }).then(() => {
                 resolve()
+            })
+        })
+    }),
+
+    checkcoupon: ((coup, hotelid, userid) => {
+        console.log(userid);
+        let { coupon } = coup;
+        console.log(typeof coupon);
+        return new Promise(async (resolve, reject) => {
+            let response = {}
+            const offer = {}
+            offer.hotelid = hotelid;
+            offer.userid = userid;
+            offer.coupon=coupon;
+            let iscoup = await db.get().collection("justcoupon").findOne({coupon:coupon });
+
+            if (iscoup) {
+                response.isok = false;
+                resolve(response)
+            } else {
+             
+                await db.get().collection("coupon").findOne({ coupon: coupon }).then(async(respo) => {
+
+                    console.log(respo);
+                    if (respo) {
+                        offer.coupondetails=respo;
+                        await db.get().collection("justcoupon").insertOne(offer).then((of) => {
+                            console.log(of);
+                        })
+                        response.isok = true
+                        resolve(response)
+                    } else {
+                        response.isok = false;
+                        resolve(response)
+                    }
+                })
+            }
+        })
+    }),
+
+    findoffer : ((userid, hotelid)=>{
+        return new Promise(async(resolve, reject) => {
+          await  db.get().collection("justcoupon").findOne({userid:userid,hotelid:hotelid}).then((off)=>{
+                resolve(off)
             })
         })
     })

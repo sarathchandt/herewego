@@ -151,6 +151,7 @@
                                             <%= hotel.name.toUpperCase() %>
                                         </b>
                                     </h5>
+                                    
                                     <h6>
                                         <%= hotel.place %>
                                     </h6>
@@ -171,7 +172,7 @@
                             <hr>
                         </div>
                         
-
+                        <p class="text-danger"><del>₹ <%= hotel.preprice  %>  </del></p>
                         <a href="#" onclick="ready()" class="btn btn-primary" >Pay now    ₹ <%= hotel.totalprice.toLocaleString() %>
                                 /-
                         </a>
@@ -308,18 +309,18 @@
     
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    
 
 
     <script>
         function ready() {
-            
-
+          
             $.ajax({
                 url: "/makepaynow/<%= hotel._id %>/ <%= p %>/ <%= q %>/ <%= hotel.diffdate %> / <%= temp.adult %> / <%= hotel.gst %> /<%= hotel.totalprice %>",
                 method: "get",
                 success: (response) => {
                     razorparhere(response);
-                    // alert(response)
+                  console.log(response);
                     console.log(response);
                      
                      

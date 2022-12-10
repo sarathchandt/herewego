@@ -294,5 +294,29 @@ await db.get().collection("hotels").find().toArray().then((hotel)=>{
                     })
                 })
             })
-        })
+        }),
+
+        tackecoupon : (()=>{
+            return new Promise(async(resolve, reject) => {
+                await db.get().collection("coupon").find().toArray().then((coupon)=>{
+                    resolve(coupon)
+                })
+            })
+        }),
+
+        addcoupon : ((couponid)=>{
+            return new Promise((resolve, reject) => {
+                db.get().collection("coupon").insertOne(couponid).then(()=>{
+                    resolve()
+                })
+            })
+        }),
+
+        deletecoupon : ((couponid)=>{
+            return new Promise((resolve, reject) => {
+                db.get().collection("coupon").deleteOne({_id:objectid(couponid)}).then(()=>{
+                    resolve()
+                })
+            })
+        }) 
 }

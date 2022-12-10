@@ -8,9 +8,6 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
-    <!-- sweetalert2-2 -->
-    <link rel="stylesheet" href="@sweetalert2/theme-borderless/borderless.css">
-
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
@@ -66,11 +63,13 @@
                     <a href="/admin" class="nav-item nav-link ">
                         <!-- <i
                             class="fa fa-tachometer-alt me-2"></i> -->
-                            Users</a>
+                        Users
+                    </a>
                     <div class="nav-item ">
-                        <a href="/admin/addhotel" class="nav-link active" data-bs-toggle="">
+                        <a href="/admin/addhotel" class="nav-link " data-bs-toggle="">
                             <!-- <i class="fa fa-laptop me-2"></i> -->
-                                Hotels</a>
+                            Hotels
+                        </a>
                         <!-- <div class="dropdown-menu bg-transparent border-0">
                             <a href="button.html" class="dropdown-item">Buttons</a>
                             <a href="typography.html" class="dropdown-item">Typography</a>
@@ -109,8 +108,8 @@
                     <i class="fa fa-bars"></i>
                 </a>
                 <form action="/admin/search" method="post" class="d-none d-md-flex ms-4">
-                    <input class="form-control border-0" type="search" name="search" >
-                    <button  type="submit" class="btn btn-primary" >Search</button>
+                    <input class="form-control border-0" type="search" name="search">
+                    <button type="submit" class="btn btn-primary">Search</button>
                 </form>
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
@@ -195,122 +194,103 @@
             <!-- Navbar End -->
 
             <!-- user managements -->
-            <div>
-
-                <div class="container-fluid">
-                    <!-- Row Starts -->
-                    <div class="row">
-                        
-                           
-                        
-                        <table class="table table-bordered border-primar">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 p-4">
+                        <form action="/admin/addcoupon" method="post">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Enter Coupon Code</label>
+                                <input type="text" class="form-control" id="" name="coupon"
+                                    aria-describedby="emailHelp" required>
+    
+                            </div><br>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Enter Percentage of discount</label>
+                                <input type="number" class="form-control" id="" name="per"
+                                    aria-describedby="emailHelp" required>
+    
+                            </div>
+                            <button type="submit" style="background-color: #009cff;" class="btn text-white mt-2" >Enter</button>
+                        </form>
+                    </div>
+                </div>
+                
+            </div>
+ 
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 p-5">
+                        <table class="table">
                             <thead>
                               <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">Image</th>
-                                <th scope="col">Hotel name</th>
-                                <th scope="col">Place</th>
-                                <th scope="col">Price</th>
-                                <th scope="col">Actions</th>
+                                <th scope="col">Coupon Code</th>
+                                <th scope="col">Percentage</th>
+                                <th scope="col">Handle</th>
                               </tr>
                             </thead>
-                            <% for(let hotels of hotel){ %>
                             <tbody>
+                                <% for(let coupons of coupon){ %> 
                               <tr>
                                 <th scope="row">1</th>
-                                <td>
-                                    <img src="../images/product/<%=hotels.imageUrl %>" style="width:50px ; height: 50px;" alt=""   ></td>
-                                <td><%= hotels.name %></td>
-                                <td><%= hotels.place %></td>
-                                <td><%= hotels.price %></td>
-                                <td> 
-                                   <a href="/admin/edithotel/<%= hotels._id %>" class="btn btn-warning">Edit</a>
-                                    <!-- <a href="/admin/deletehotel/<%= hotels._id %>" class="btn btn-danger">remove</a> -->
-                                    <a  onclick= "removehotels('<%= hotels._id %>' )" class="btn btn-danger">remove</a>
-                                </td>
-    
+                                <td> <%= coupons.coupon  %>  </td>
+                                <td> <%= coupons.per  %>%  </td> 
+                                <td> <a href="/admin/removecoupon/<%= coupons._id  %> " class="btn text-white" style="background-color: #ff0000;" > Remove</a> </td>
                               </tr>
-                              
-                             
+                             <% } %> 
                             </tbody>
-                            <% } %>
                           </table>
-    
-    
-    
-    
                     </div>
-                    
-                   
-    
-                
-                    
-                 
-    
-    
-    
-                  
-                     
-    
-    
-                <!-- Container-fluid ends -->
+                </div>
             </div>
-            </div>
-              
 
-            
+           
+
+            <!-- Content End -->
+
+
+            <!-- Back to Top -->
+            <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
         </div>
-        <!-- Content End -->
 
-
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-    </div>
-
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../stylesheetB/lib/chart/chart.min.js"></script>
-    <script src="../stylesheetB/lib/easing/easing.min.js"></script>
-    <script src="../stylesheetB/lib/waypoints/waypoints.min.js"></script>
-    <script src="../stylesheetB/lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="../stylesheetB/lib/tempusdominus/js/moment.min.js"></script>
-    <script src="../stylesheetB/lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="../stylesheetB/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
-<!-- <script src="sweetalert2/dist/sweetalert2.min.js"></script> -->
-    <script>
-        function removehotels(id){
-            Swal.fire({
-                title : "Are you sure ?",
-                text : "The data will delete permenantly !",
-                    icon:"warning",
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="../stylesheetB/lib/chart/chart.min.js"></script>
+        <script src="../stylesheetB/lib/easing/easing.min.js"></script>
+        <script src="../stylesheetB/lib/waypoints/waypoints.min.js"></script>
+        <script src="../stylesheetB/lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="../stylesheetB/lib/tempusdominus/js/moment.min.js"></script>
+        <script src="../stylesheetB/lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="../stylesheetB/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <script>
+            function removebaner(id) {
+                Swal.fire({
+                    title: "Are you sure ?",
+                    text: "This baner will delete permenantly",
+                    icon: "warning",
                     showCancelButton: true,
-                    confirmButtonColor:"#f54242",
-                    cancelButtonColor : "#a39e9e",
-                    confirmButtonText:"Yes delete"
-                }).then( (result)=>{
-                    if(result.isConfirmed){
-                        const form= document.createElement('form');
-                        form.method="get";
-                        form.action=`/admin/deletehotel/${id}`;
+                    confirmButtonColor: "#f54242",
+                    cancelButtonColor: "#a39e9e",
+                    confirmButtonText: "Yes delete"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        const form = document.createElement('form');
+                        form.method = "get";
+                        form.action = `/admin/removebaner/${id}`;
                         document.body.appendChild(form);
                         form.submit()
-               
+                        Swal.fire({
+                            text: "File deleted successfuly ",
+                        })
                     }
-
-                }).then((result)=>{
-                    Swal.fire({
-                            text:"File deleted successfuly ",
-                      })
                 })
-        }
-    </script>
-    
+            }
+        </script>
 
-    <!-- Template Javascript -->
-    <script src="../stylesheetB/js/main.js"></script>
+        <!-- Template Javascript -->
+        <script src="../stylesheetB/js/main.js"></script>
 </body>
 
 </html>

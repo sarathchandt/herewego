@@ -7,6 +7,8 @@ let swal = require("sweetalert");
 const session = require("express-session");
 const async = require("hbs/lib/async");
 const admincontrol = require("../control/admincontrol");
+const { response } = require("express");
+const { Db } = require("mongodb");
 
 
 
@@ -15,7 +17,7 @@ router.get("/", ((req, res) => {
     if (req.session.login) {
         res.redirect("/user")
     } else {
-        response = {}
+      const  response = {}
         response.block = false
         res.render("login", { response })
     }
@@ -289,7 +291,7 @@ router.get("/deletedp", (req, res) => {
 router.post("/paymenthere/:id", (req, res) => {
 
 
-    if (req.session.userId) {
+    if (req.session.userId) {  
 
         let temp = req.body;
         const { fromdate, todate, adult } = temp
@@ -317,10 +319,21 @@ router.post("/paymenthere/:id", (req, res) => {
                 hotel.gst = 28
             }
 
-            hotel.totalprice = await (hotel.price * diffDays) + ((hotel.gst / 100) * hotel.price) + (hotel.adult * adult);
+            usersntrl.findoffer(req.session.userId,req.params.id).then(async(off)=>{
+                if(off){
+                    let per = Number(off.coupondetails.per)/100
+                    hotel.totalprice = await( (hotel.price * diffDays) + ((hotel.gst / 100) * hotel.price) + (hotel.adult * adult))*per
+                    hotel.preprice = await(hotel.price * diffDays) + ((hotel.gst / 100) * hotel.price) + (hotel.adult * adult);
+                  }else{
+                    hotel.totalprice = await(hotel.price * diffDays) + ((hotel.gst / 100) * hotel.price) + (hotel.adult * adult);
+                  }
+                    
+        
+                    res.render("topayment", { hotel, temp, p, q })
 
-
-            res.render("topayment", { hotel, temp, p, q })
+            })
+          
+        
         })
 
     } else {
@@ -396,10 +409,11 @@ router.get("/makepaynow/:id/:fromdate/:todate/:days/:adult/:gst/:totalprice", (r
         req.params.days,
         req.params.adult,
         req.params.gst,
+   
         req.params.totalprice).then((response) => {
-
+            console.log( req.params.totalprice);
             usersntrl.generateorder(response.insertedId, req.params.totalprice).then((response) => {
-
+               
                 res.json(response)
             })
 
@@ -475,14 +489,25 @@ router.post("/rentcatogarysearch", (req, res) => {
     })
 })
 
-router.get("/activate/:id",(req,res)=>{
-    if(req.session.login){
-        usersntrl.activate(req.params.id).then(()=>{
+router.get("/activate/:id", (req, res) => {
+    if (req.session.login) {
+        usersntrl.activate(req.params.id).then(() => {
             res.redirect("/viewrental")
         })
-    }else{
+    } else {
         res.redirect("/")
     }
+})
+
+router.post("/checkcoupon/:id",(req,res)=>{
+    if(req.session.login){
+   console.log(req.params.id)
+    usersntrl.checkcoupon(req.body, req.params.id, req.session.userId).then((response)=>{
+        res.json(response)
+    })
+}else{
+    res.redirect("/")
+}
 })
 
 
@@ -495,7 +520,7 @@ router.get("/logout", ((req, res, next) => {
 router.get("/viewrental", (req, res) => {
     if (req.session.login) {
         usersntrl.takerenteditems(req.session.userId).then((rent) => {
-            
+
             let name = rent[0]?.user?.name;
             res.render("viewrent", { rent, name })
         })
