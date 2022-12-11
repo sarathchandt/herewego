@@ -24,7 +24,7 @@ router.get("/", ((req, res) => {
 }))
 
 router.get("/signup", (req, res) => {
-    response = {}
+   const  response = {}
     response.pas = false
 
     res.render("usesignup", { response })
