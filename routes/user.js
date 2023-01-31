@@ -421,7 +421,7 @@ router.get("/makepaynow/:id/:fromdate/:todate/:days/:adult/:gst/:totalprice", (r
 
 })
 
-router.post("/verifypayment", (req, res) => {
+router.post("/verifypayment", (req, res) => { 
     console.log(req.body);
 
     usersntrl.verifywithcrypto(req.body).then(() => {
